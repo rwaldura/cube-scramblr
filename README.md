@@ -4,4 +4,4 @@ based off [David Gilday's MindCuber](https://www.mindcuber.com/).
 
 Written in [MicroPython, running on ev3dev](https://education.lego.com/en-us/support/mindstorms-ev3/python-for-ev3).
 
-See also [Getting started with EV3 MicroPython](local_copy_link).
+See also [Getting started with EV3 MicroPython](ev3micropythonv100-71d3f28c59a1e766e92a59ff8500818e.pdf).
