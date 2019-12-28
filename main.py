@@ -16,7 +16,7 @@ import random, time
 # motor on port A for flips
 flip_motor = Motor(Port.A)
 flip_motor_max_angle = 200
-flip_motor_hold_angle = 105
+flip_motor_hold_angle = 110
 flip_motor_min_angle = 15
 flip_motor_speed = 80
 flip_motor_power = 30 # percent of total torque
@@ -24,6 +24,7 @@ flip_motor_power = 30 # percent of total torque
 # motor on port B for rotations
 rot_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
 rot_motor_speed = 90
+rot_angle_delta = 15
 
 ##############################################################################
 def display(mesg) :
@@ -37,12 +38,12 @@ def init_all() :
     display("CUBE SCRAMBLER")
 
     init_flipping_arm()
-    #init_rotating_shelf()
+    #init_turntable()
 
     print("initialized all.")
 
 ##############################################################################
-def init_rotating_shelf() :
+def init_turntable() :
     # reset rotation angle to zero
     rot_motor.run_angle(90, 0)
     rot_motor.reset_angle(0)
@@ -77,11 +78,11 @@ def reset_arm() :
 def flip_cube(n = 1) :
     print("flipping cube:", n)
 
-    reset_arm()
+    flip_motor.run_target(flip_motor_speed, flip_motor_hold_angle)
 
     for i in range(n) :
         flip_motor.run_target(flip_motor_speed, flip_motor_max_angle)
-        flip_motor.run_target(flip_motor_speed, flip_motor_min_angle)
+        flip_motor.run_target(flip_motor_speed, flip_motor_hold_angle)
 
 ##############################################################################
 # Rotate the bottom layer of the cube
@@ -101,15 +102,27 @@ def rotate_cube(n = 1, correct = False, arm_reset = True) :
     print("rotating cube:", n)
     angle = 90 * n
 
-    # because the cube is not snug on the shelf, we must
+    print("rotating angle:", angle)
+
+    # because the cube is not snug on the turntable, we must
     # overshoot a bit to get the cube to align correctly
     if (correct) :
         if (n > 0) : 
-            angle += 10
+            angle += rot_angle_delta
         else :
-            angle -= 10
+            angle -= rot_angle_delta
 
+    print("corrected angle:", angle)
     rot_motor.run_angle(rot_motor_speed, angle)
+
+    if (correct) :
+        if (n > 0) : 
+            angle = -rot_angle_delta
+        else :
+            angle = +rot_angle_delta
+
+        print("re-corrected angle:", angle)
+        rot_motor.run_angle(rot_motor_speed, angle)
 
 ##############################################################################
 # Wait until any of the buttons are pressed
@@ -125,9 +138,20 @@ display("insert cube, and")
 display("press any button")
 pause()
 
-rotate_cube(2)
-flip_cube(2)
+# rotate_cube(1)
+# flip_cube(1)
+# pause()
+
+# rotate_cube(-2)
+# flip_cube(2)
+# pause()
+
 rotate_cube_layer(1)
+flip_cube(1)
+pause()
+rotate_cube_layer(-2)
+flip_cube(2)
+
 reset_arm()
 
 # for n in range(5) :
