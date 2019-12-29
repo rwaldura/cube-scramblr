@@ -17,7 +17,7 @@ import random, time
 flip_motor = Motor(Port.A)
 flip_motor_max_angle = 200
 flip_motor_hold_angle = 110
-flip_motor_min_angle = 15
+flip_motor_min_angle = 18
 flip_motor_speed = 80
 flip_motor_power = 30 # percent of total torque
 
@@ -138,25 +138,15 @@ display("insert cube, and")
 display("press any button")
 pause()
 
-# rotate_cube(1)
-# flip_cube(1)
-# pause()
+for n in range(10) :
+    r = random.randint(-3, 3)
+    if (r > 0) :
+        print("performing layer rotations", r)
+        rotate_cube_layer(r)
 
-# rotate_cube(-2)
-# flip_cube(2)
-# pause()
-
-rotate_cube_layer(1)
-flip_cube(1)
-pause()
-rotate_cube_layer(-2)
-flip_cube(2)
+    r = random.randint(-3, 3)
+    if (r > 0) :
+        print("performing flips", r)
+        flip_cube(r)
 
 reset_arm()
-
-# for n in range(5) :
-#     r = random.randint(-3, 3)
-#     print("performing rotations", r)
-#     rotate_cube(r)
-#     print("performing flips", r)
-#     flip_cube(r)
