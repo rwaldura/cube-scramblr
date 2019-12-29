@@ -16,15 +16,15 @@ import random, time
 # motor on port A for flips
 flip_motor = Motor(Port.A)
 flip_motor_max_angle = 200
-flip_motor_hold_angle = 110
-flip_motor_min_angle = 18
-flip_motor_speed = 80
+flip_motor_hold_angle = 120
+flip_motor_min_angle = 15
+flip_motor_speed = 200
 flip_motor_power = 30 # percent of total torque
 
 # motor on port B for rotations
 rot_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
-rot_motor_speed = 90
-rot_angle_delta = 15
+rot_motor_speed = 180
+rot_angle_delta = 20
 
 ##############################################################################
 def display(mesg) :
@@ -38,14 +38,15 @@ def init_all() :
     display("CUBE SCRAMBLER")
 
     init_flipping_arm()
-    #init_turntable()
+    init_turntable()
 
     print("initialized all.")
 
 ##############################################################################
 def init_turntable() :
     # reset rotation angle to zero
-    rot_motor.run_angle(90, 0)
+    rot_motor.run_angle(rot_motor_speed, 360, Stop.BRAKE)
+    rot_motor.run_angle(rot_motor_speed, -360, Stop.BRAKE)
     rot_motor.reset_angle(0)
 
 ##############################################################################
@@ -113,7 +114,7 @@ def rotate_cube(n = 1, correct = False, arm_reset = True) :
             angle -= rot_angle_delta
 
     print("corrected angle:", angle)
-    rot_motor.run_angle(rot_motor_speed, angle)
+    rot_motor.run_angle(rot_motor_speed, angle, Stop.BRAKE)
 
     if (correct) :
         if (n > 0) : 
@@ -122,7 +123,7 @@ def rotate_cube(n = 1, correct = False, arm_reset = True) :
             angle = +rot_angle_delta
 
         print("re-corrected angle:", angle)
-        rot_motor.run_angle(rot_motor_speed, angle)
+        rot_motor.run_angle(rot_motor_speed, angle, Stop.BRAKE)
 
 ##############################################################################
 # Wait until any of the buttons are pressed
@@ -138,15 +139,17 @@ display("insert cube, and")
 display("press any button")
 pause()
 
-for n in range(10) :
+flip_motor.run_target(flip_motor_speed, flip_motor_hold_angle)
+pause()
+
+for n in range(20) :
     r = random.randint(-3, 3)
-    if (r > 0) :
+    if (r != 0) :
         print("performing layer rotations", r)
         rotate_cube_layer(r)
 
-    r = random.randint(-3, 3)
-    if (r > 0) :
-        print("performing flips", r)
-        flip_cube(r)
+    r = random.randint(1, 3)
+    print("performing flips", r)
+    flip_cube(r)
 
 reset_arm()
