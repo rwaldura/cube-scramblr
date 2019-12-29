@@ -139,9 +139,6 @@ display("insert cube, and")
 display("press any button")
 pause()
 
-flip_motor.run_target(flip_motor_speed, flip_motor_hold_angle)
-pause()
-
 for n in range(20) :
     r = random.randint(-3, 3)
     if (r != 0) :
