@@ -74,11 +74,12 @@ def rotate_table(angle) :
     table_motor.run_angle(table_speed, angle, Stop.HOLD)
 
 ##############################################################################
-# Mpve the flipping arm TO the given angle
+# Move the flipping arm TO the given angle
 def move_arm(angle) :
     arm_motor.run_target(arm_speed, angle)
 
 ##############################################################################
+# Flip the cube, i.e. tilt it by a quarter-turn
 def flip_cube(n = 1) :
     print("flipping cube:", n)
 
@@ -90,7 +91,8 @@ def flip_cube(n = 1) :
 
 ##############################################################################
 # Rotate the bottom layer of the cube
-# n is the number of rotations: positive for clockwise, negative for counter-clockwise
+# n is the number of quarter-turns: positive for clockwise, negative for 
+# counter-clockwise
 def rotate_cube_layer(n = 1) :
     print("rotating cube bottom layer:", n)
     arm_motor.run_target(arm_speed, arm_hold_angle)
@@ -98,14 +100,17 @@ def rotate_cube_layer(n = 1) :
 
 ##############################################################################
 # Rotate the entire cube
-# n is the number of rotations: positive for clockwise, negative for counter-clockwise
+# n is the number of quarter-turns: positive for clockwise, negative for 
+# counter-clockwise
 def rotate_cube(n = 1, correct = False, arm_reset = True) :
     if (arm_reset) : 
         reset_arm()
 
     print("rotating cube:", n)
+    
     angle = 90 * n
-
+    if (angle == 0) : 
+        return
     print("rotating angle:", angle)
 
     # because the cube is not snug on the turntable, we must
@@ -138,19 +143,16 @@ def pause() :
 # main
 init_all()
 
-display("insert cube, and")
-display("press any button")
+display("insert cube, and\npress any button")
 pause()
 
 for n in range(scrambling_max) :
     r = random.randint(-3, 3)
-    if (r != 0) :
-        print("performing layer rotations", r)
-        rotate_cube_layer(r)
+    print("performing layer rotations", r)
+    rotate_cube_layer(r)
 
     r = random.randint(1, 3)
     print("performing flips", r)
     flip_cube(r)
 
-reset_arm()
 rotate_cube(360)
