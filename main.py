@@ -21,13 +21,13 @@ arm_motor = Motor(Port.A)
 arm_max_angle = 200
 arm_hold_angle = 120
 arm_min_angle = 15
-arm_speed = 200
+arm_speed = 255
 
 # motor on port B rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
 table_speed = 60
+table_motor.set_run_settings(table_speed, 2 * table_speed)
 table_epsilon = 20
-#table_motor.set_run_settings(60, 120)
 
 ##############################################################################
 def display(mesg) :
@@ -153,3 +153,4 @@ for n in range(scrambling_max) :
     flip_cube(r)
 
 reset_arm()
+rotate_cube(360)
