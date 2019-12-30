@@ -14,19 +14,20 @@ import random, time
 # globals and constants
 
 # total number of scrambling moves: flips and rotations
-scrambling_max = 20
+scrambling_max = 10
 
-# motor on port A for flips
-flip_motor = Motor(Port.A)
-flip_motor_max_angle = 200
-flip_motor_hold_angle = 120
-flip_motor_min_angle = 15
-flip_motor_speed = 200
+# motor on port A for flipping arm
+arm_motor = Motor(Port.A)
+arm_max_angle = 200
+arm_hold_angle = 120
+arm_min_angle = 15
+arm_speed = 200
 
-# motor on port B for rotations
-rot_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
-rot_motor_speed = 180
-rot_angle_delta = 20
+# motor on port B rotates the turntable
+table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
+table_speed = 60
+table_epsilon = 20
+#table_motor.set_run_settings(60, 120)
 
 ##############################################################################
 def display(mesg) :
@@ -47,52 +48,52 @@ def init_all() :
 ##############################################################################
 def init_turntable() :
     # reset rotation angle to zero
-    rot_motor.run_angle(rot_motor_speed, 360, Stop.BRAKE)
-    rot_motor.run_angle(rot_motor_speed, -360, Stop.BRAKE)
-    rot_motor.reset_angle(0)
+    rotate_table(360)
+    rotate_table(-360)
+    table_motor.reset_angle(0)
 
 ##############################################################################
 def init_flipping_arm() :
     print("initializing flipping arm...")
 
     # bring it to its lowest position
-    flip_motor.run_until_stalled(-flip_motor_speed)
-    flip_motor.reset_angle(0)
+    arm_motor.run_until_stalled(-arm_speed)
+    arm_motor.reset_angle(0)
     print("zero found")
-
-    # # bring it to its highest position
-    # flip_motor.run_until_stalled(+flip_motor_speed, Stop.COAST, flip_motor_power)
-    # max = flip_motor.angle()
-    # print("max angle", max)
-
-    # # reset
-    # flip_motor.run_target(flip_motor_speed, 0)
-
-    # return max
 
 ##############################################################################
 def reset_arm() :
     print("resetting flipping arm")
 
-    if (flip_motor.angle() > flip_motor_min_angle) :
-        flip_motor.run_target(flip_motor_speed, flip_motor_min_angle)
+    if (arm_motor.angle() > arm_min_angle) :
+        move_arm(arm_min_angle)
+
+##############################################################################
+# Rotate the turntable BY the given angle
+def rotate_table(angle) :
+    table_motor.run_angle(table_speed, angle, Stop.HOLD)
+
+##############################################################################
+# Mpve the flipping arm TO the given angle
+def move_arm(angle) :
+    arm.run_target(arm_speed, angle)
 
 ##############################################################################
 def flip_cube(n = 1) :
     print("flipping cube:", n)
 
-    flip_motor.run_target(flip_motor_speed, flip_motor_hold_angle)
+    move_arm(arm_hold_angle)
 
     for i in range(n) :
-        flip_motor.run_target(flip_motor_speed, flip_motor_max_angle)
-        flip_motor.run_target(flip_motor_speed, flip_motor_hold_angle)
+        move_arm(arm_max_angle)
+        move_arm(arm_hold_angle)
 
 ##############################################################################
 # Rotate the bottom layer of the cube
 # n is the number of rotations: positive for clockwise, negative for counter-clockwise
 def rotate_cube_layer(n = 1) :
     print("rotating cube bottom layer:", n)
-    flip_motor.run_target(flip_motor_speed, flip_motor_hold_angle)
+    arm_motor.run_target(arm_speed, arm_hold_angle)
     rotate_cube(n, True, False)
 
 ##############################################################################
@@ -108,24 +109,24 @@ def rotate_cube(n = 1, correct = False, arm_reset = True) :
     print("rotating angle:", angle)
 
     # because the cube is not snug on the turntable, we must
-    # overshoot a bit to get the cube to align correctly
+    # overcorrect a bit to get the cube to align correctly
     if (correct) :
         if (n > 0) : 
-            angle += rot_angle_delta
+            angle += table_epsilon
         else :
-            angle -= rot_angle_delta
+            angle -= table_epsilon
 
     print("corrected angle:", angle)
-    rot_motor.run_angle(rot_motor_speed, angle, Stop.BRAKE)
+    rotate_table(angle)
 
     if (correct) :
         if (n > 0) : 
-            angle = -rot_angle_delta
+            angle = -table_epsilon
         else :
-            angle = +rot_angle_delta
+            angle = +table_epsilon
 
         print("re-corrected angle:", angle)
-        rot_motor.run_angle(rot_motor_speed, angle, Stop.BRAKE)
+        rotate_table(angle)
 
 ##############################################################################
 # Wait until any of the buttons are pressed
