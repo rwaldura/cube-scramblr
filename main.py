@@ -48,7 +48,7 @@ def init_all() :
 ##############################################################################
 def init_turntable() :
     # reset rotation angle to zero
-    rotate_table(360)
+    rotate_table(+360)
     rotate_table(-360)
     table_motor.reset_angle(0)
 
@@ -76,7 +76,7 @@ def rotate_table(angle) :
 ##############################################################################
 # Mpve the flipping arm TO the given angle
 def move_arm(angle) :
-    arm.run_target(arm_speed, angle)
+    arm_motor.run_target(arm_speed, angle)
 
 ##############################################################################
 def flip_cube(n = 1) :
