@@ -13,13 +13,15 @@ import random, time
 ##############################################################################
 # globals and constants
 
+# total number of scrambling moves: flips and rotations
+scrambling_max = 20
+
 # motor on port A for flips
 flip_motor = Motor(Port.A)
 flip_motor_max_angle = 200
 flip_motor_hold_angle = 120
 flip_motor_min_angle = 15
 flip_motor_speed = 200
-flip_motor_power = 30 # percent of total torque
 
 # motor on port B for rotations
 rot_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
@@ -139,7 +141,7 @@ display("insert cube, and")
 display("press any button")
 pause()
 
-for n in range(20) :
+for n in range(scrambling_max) :
     r = random.randint(-3, 3)
     if (r != 0) :
         print("performing layer rotations", r)
