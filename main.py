@@ -21,7 +21,7 @@ arm_motor = Motor(Port.A)
 arm_max_angle = 200
 arm_hold_angle = 120
 arm_min_angle = 15
-arm_speed = 255
+arm_speed = 256
 
 # motor on port B rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
@@ -107,7 +107,7 @@ def rotate_cube(n = 1, correct = False, arm_reset = True) :
         reset_arm()
 
     print("rotating cube:", n)
-    
+
     angle = 90 * n
     if (angle == 0) : 
         return
