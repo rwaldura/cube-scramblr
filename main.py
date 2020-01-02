@@ -1,4 +1,15 @@
 #!/usr/bin/env pybricks-micropython
+#
+# The structure, the build, is based off David Gilday's MindCub3r
+# at https://www.mindcuber.com/mindcub3r/mindcub3r.html
+#
+# The language, MicroPython, is documented at
+# https://education.lego.com/en-us/support/mindstorms-ev3/python-for-ev3
+#
+# by Ren Waldura ren+lego@waldura.org, 2019
+#
+# See LICENSE file for licensing information
+#
 
 from pybricks import ev3brick as brick
 from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
@@ -16,18 +27,21 @@ import random, time
 # total number of scrambling moves: flips and rotations
 scrambling_max = 10
 
-# motor on port A for flipping arm
+# "A" motor flips arm
 arm_motor = Motor(Port.A)
 arm_max_angle = 200
 arm_hold_angle = 120
-arm_min_angle = 15
+arm_min_angle = 10
 arm_speed = 256
 
-# motor on port B rotates the turntable
+# "B" motor rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
-table_speed = 60
+table_speed = 90
 table_motor.set_run_settings(table_speed, 2 * table_speed)
 table_epsilon = 20
+
+# color sensor, used to align the turntable
+table_sensor = ColorSensor(Port.S1)
 
 ##############################################################################
 def display(mesg) :
@@ -47,9 +61,26 @@ def init_all() :
 
 ##############################################################################
 def init_turntable() :
-    # reset rotation angle to zero
-    rotate_table(+360)
-    rotate_table(-360)
+    # go through a full rotation, seeking to maximize the reflection 
+    # returned by the sensor
+    table_motor.run(table_speed)
+
+    # record the reflection for each angle
+    reflect = [0] * 400
+
+    while (table_motor.angle() < 360) :
+        r = table_sensor.reflection()
+        a = table_motor.angle()
+        print("reflect", r, "at angle", a)
+        reflect[a] = r
+
+    table_motor.stop()
+
+    # find the highest reflection angle
+    max_angle = reflect.index(max(reflect))
+    print("found highest reflection", reflect[max_angle], "at angle", max_angle)
+
+    table_motor.run_target(table_speed, max_angle + 10, Stop.HOLD)
     table_motor.reset_angle(0)
 
 ##############################################################################
@@ -141,9 +172,11 @@ def pause() :
 
 ##############################################################################
 # main
+
 init_all()
 
-display("insert cube, and\npress any button")
+display("insert cube, and")
+display("press any button")
 pause()
 
 for n in range(scrambling_max) :
