@@ -31,12 +31,12 @@ scrambling_max = 10
 arm_motor = Motor(Port.A)
 arm_max_angle = 200
 arm_hold_angle = 120
-arm_min_angle = 10
+arm_min_angle = 5
 arm_speed = 256
 
 # "B" motor rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
-table_speed = 90
+table_speed = 90 * 2
 table_motor.set_run_settings(table_speed, 2 * table_speed)
 table_epsilon = 20
 
@@ -80,7 +80,7 @@ def init_turntable() :
     max_angle = reflect.index(max(reflect))
     print("found highest reflection", reflect[max_angle], "at angle", max_angle)
 
-    table_motor.run_target(table_speed, max_angle + 10, Stop.HOLD)
+    table_motor.run_target(table_speed, max_angle + 5, Stop.HOLD)
     table_motor.reset_angle(0)
 
 ##############################################################################
@@ -188,4 +188,4 @@ for n in range(scrambling_max) :
     print("performing flips", r)
     flip_cube(r)
 
-rotate_cube(360)
+rotate_cube(4)
