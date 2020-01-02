@@ -36,7 +36,7 @@ arm_speed = 256
 
 # "B" motor rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
-table_speed = 90 * 2
+table_speed = 90
 table_motor.set_run_settings(table_speed, 2 * table_speed)
 table_epsilon = 20
 
@@ -63,7 +63,7 @@ def init_all() :
 def init_turntable() :
     # go through a full rotation, seeking to maximize the reflection 
     # returned by the sensor
-    table_motor.run(table_speed)
+    table_motor.run(table_speed / 2)
 
     # record the reflection for each angle
     reflect = [0] * 400
