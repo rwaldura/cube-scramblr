@@ -37,6 +37,7 @@ arm_speed = 256
 # "B" motor rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
 table_speed = 90
+table_max_speed = 2 * table_speed
 table_motor.set_run_settings(table_speed, 2 * table_speed)
 table_epsilon = 20
 
@@ -69,6 +70,7 @@ def init_turntable() :
     reflect = [0] * 400
 
     while (table_motor.angle() < 360) :
+        wait(10) # sample 10 times per second
         r = table_sensor.reflection()
         a = table_motor.angle()
         print("reflect", r, "at angle", a)
@@ -80,7 +82,10 @@ def init_turntable() :
     max_angle = reflect.index(max(reflect))
     print("found highest reflection", reflect[max_angle], "at angle", max_angle)
 
-    table_motor.run_target(table_speed, max_angle + 5, Stop.HOLD)
+    # correct to get a straight angle on the table
+    angle_reflection_epsilon = 7
+
+    table_motor.run_target(table_speed, max_angle + angle_reflection_epsilon, Stop.HOLD)
     table_motor.reset_angle(0)
 
 ##############################################################################
@@ -101,13 +106,13 @@ def reset_arm() :
 
 ##############################################################################
 # Rotate the turntable BY the given angle
-def rotate_table(angle) :
-    table_motor.run_angle(table_speed, angle, Stop.HOLD)
+def rotate_table(angle, speed = table_speed) :
+    table_motor.run_angle(speed, angle, Stop.HOLD)
 
 ##############################################################################
 # Move the flipping arm TO the given angle
 def move_arm(angle) :
-    arm_motor.run_target(arm_speed, angle)
+    arm_motor.run_target(arm_speed, angle, Stop.HOLD)
 
 ##############################################################################
 # Flip the cube, i.e. tilt it by a quarter-turn
@@ -140,9 +145,9 @@ def rotate_cube(n = 1, correct = False, arm_reset = True) :
     print("rotating cube:", n)
 
     angle = 90 * n
+    print("rotating angle:", angle)
     if (angle == 0) : 
         return
-    print("rotating angle:", angle)
 
     # because the cube is not snug on the turntable, we must
     # overcorrect a bit to get the cube to align correctly
@@ -188,4 +193,6 @@ for n in range(scrambling_max) :
     print("performing flips", r)
     flip_cube(r)
 
-rotate_cube(4)
+# victory lap
+reset_arm()
+rotate_table(6 * 90 + 45, table_max_speed)
