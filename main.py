@@ -101,12 +101,12 @@ def reset_scan_arm() :
 ##############################################################################
 # Move the flipping arm TO the given angle
 def move_flip_arm(angle) :
-    flip_motor.run_target(flip_speed, angle, Stop.HOLD)
+    flip_motor.run_target(flip_speed, angle, Stop.BRAKE)
 
 ##############################################################################
 # Move the scanning arm TO the given angle
 def move_scan_arm(angle) :
-    scan_motor.run_target(scan_speed, angle, Stop.HOLD)
+    scan_motor.run_target(scan_speed, angle, Stop.BRAKE)
 
 ##############################################################################
 # Flip the cube, i.e. tilt it by a quarter-turn
@@ -116,8 +116,8 @@ def flip_cube(n = 1) :
     move_flip_arm(flip_hold_angle)
 
     for i in range(n) :
-        move_arm(flip_max_angle)
-        move_arm(flip_hold_angle)
+        move_flip_arm(flip_max_angle)
+        move_flip_arm(flip_hold_angle)
 
 ##############################################################################
 # Rotate the bottom layer of the cube
