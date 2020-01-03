@@ -38,7 +38,7 @@ def init() :
     reflect = [0] * 400
 
     while (table_motor.angle() < 360) :
-        wait(10) # sample 10 times per second
+        wait(100) # sample 10 times per second
         r = table_sensor.reflection()
         a = table_motor.angle()
         # print("reflect", r, "at angle", a)
