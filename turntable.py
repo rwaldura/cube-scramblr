@@ -1,6 +1,8 @@
 #
-# Turntable: the rotating platform that holds the cube.
-# The table expects a large motor on port B, and a color sensor on port 1.
+# Turntable: the rotating platform that holds the cube, and rotates it 
+# in the horizontal plane, i.e. along its vertical axis.
+#
+# It uses a large motor on port B, and a color sensor on port 1.
 #
 # by Ren Waldura ren+lego@waldura.org, 2020
 #
@@ -10,8 +12,6 @@
 from pybricks.ev3devices import (Motor, ColorSensor)
 from pybricks.parameters import (Port, Stop, Direction)
 from pybricks.tools import print, wait, StopWatch
-
-import random, time
 
 ##############################################################################
 # globals and constants

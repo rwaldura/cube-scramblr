@@ -21,20 +21,13 @@ from pybricks.robotics import DriveBase
 
 import random, time
 
-import turntable
+import turntable, flip_arm
 
 ##############################################################################
 # globals and constants
 
 # total number of scrambling moves: flips and rotations
 scrambling_max = 10
-
-# "A" motor flips arm
-flip_motor = Motor(Port.A)
-flip_max_angle = 200
-flip_hold_angle = 120
-flip_min_angle = 0
-flip_speed = 300
 
 # "C" motor moves the scanning arm
 scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
@@ -55,7 +48,7 @@ def init_all() :
     brick.display.clear()
     display("CUBE SCRAMBLER")
 
-    init_flip_arm()
+    flip_arm.init()
     turntable.init()
     init_scan_arm()
 
@@ -79,29 +72,8 @@ def init_scan_arm() :
     reset_scan_arm()
 
 ##############################################################################
-def init_flip_arm() :
-    print("initializing flipping arm...")
-
-    # bring it to its lowest position
-    flip_motor.run_until_stalled(-flip_speed)
-    flip_motor.reset_angle(0)
-    print("zero found on flipping arm")
-
-##############################################################################
-def reset_flip_arm() :
-    print("resetting flipping arm")
-
-    if (flip_motor.angle() > flip_min_angle) :
-        move_flip_arm(flip_min_angle)
-
-##############################################################################
 def reset_scan_arm() :
     move_scan_arm(0)
-
-##############################################################################
-# Move the flipping arm TO the given angle
-def move_flip_arm(angle) :
-    flip_motor.run_target(flip_speed, angle, Stop.BRAKE)
 
 ##############################################################################
 # Move the scanning arm TO the given angle
@@ -109,23 +81,12 @@ def move_scan_arm(angle) :
     scan_motor.run_target(scan_speed, angle, Stop.BRAKE)
 
 ##############################################################################
-# Flip the cube, i.e. tilt it by a quarter-turn
-def flip_cube(n = 1) :
-    print("flipping cube:", n)
-
-    move_flip_arm(flip_hold_angle)
-
-    for i in range(n) :
-        move_flip_arm(flip_max_angle)
-        move_flip_arm(flip_hold_angle)
-
-##############################################################################
 # Rotate the bottom layer of the cube
 # n is the number of quarter-turns: positive for clockwise, negative for 
 # counter-clockwise
 def rotate_cube_layer(n = 1) :
     print("rotating cube bottom layer:", n)
-    flip_motor.run_target(flip_speed, flip_hold_angle)
+    flip_arm.hold()
     rotate_cube(n, True, False)
 
 ##############################################################################
@@ -134,7 +95,7 @@ def rotate_cube_layer(n = 1) :
 # counter-clockwise
 def rotate_cube(n = 1, correct = False, flip_reset = True) :
     if (flip_reset) : 
-        reset_flipping_arm()
+        flip_arm.reset()
 
     print("rotating cube:", n)
 
@@ -161,10 +122,10 @@ def scramble_cube() :
 
         r = random.randint(1, 3)
         print("performing flips", r)
-        flip_cube(r)
+        flip_arm.flip_cube(r)
 
     # show off scrambled cube
-    reset_flip_arm()
+    flip_arm.reset()
     turntable.spin()
 
 ##############################################################################
