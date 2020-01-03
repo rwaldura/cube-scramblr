@@ -46,11 +46,6 @@ def hold() :
     _move(flip_hold_angle, Stop.HOLD)
 
 ##############################################################################
-# Move the flipping arm to its "back" position.
-def lift() :
-    _move(flip_max_angle)
-
-##############################################################################
 # Move the flipping arm TO the given angle
 # (internal method, hence the underscore prefix)
 def _move(angle, stop = Stop.COAST) :
@@ -64,5 +59,5 @@ def flip_cube(n = 1) :
     hold()
 
     for i in range(n) :
-        lift()
+        _move(flip_max_angle)
         hold()
