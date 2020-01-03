@@ -6,7 +6,7 @@
 # The language, MicroPython, is documented at
 # https://education.lego.com/en-us/support/mindstorms-ev3/python-for-ev3
 #
-# by Ren Waldura ren+lego@waldura.org, 2019
+# by Ren Waldura ren+lego@waldura.org, 2020
 #
 # See LICENSE file for licensing information
 #
@@ -32,7 +32,7 @@ arm_motor = Motor(Port.A)
 arm_max_angle = 200
 arm_hold_angle = 120
 arm_min_angle = 5
-arm_speed = 256
+arm_speed = 300
 
 # "B" motor rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
@@ -41,8 +41,14 @@ table_max_speed = 2 * table_speed
 table_motor.set_run_settings(table_speed, 2 * table_speed)
 table_epsilon = 20
 
-# color sensor, used to align the turntable
+# "C" motor moves the scanning arm
+scan_motor = Motor(Port.C)
+
+# color sensor #1, to align the turntable
 table_sensor = ColorSensor(Port.S1)
+
+# color sensor #2, to scan the cube
+scan_sensor = ColorSensor(Port.S2)
 
 ##############################################################################
 def display(mesg) :
@@ -57,8 +63,17 @@ def init_all() :
 
     init_flipping_arm()
     init_turntable()
+    init_scanning_arm()
 
     print("initialized all.")
+
+##############################################################################
+def init_scanning_arm() :
+    # test scanning arm
+    scan_motor.run_until_stalled(20)
+    scan_motor.reset_angle(0)
+
+
 
 ##############################################################################
 def init_turntable() :
@@ -176,6 +191,25 @@ def pause() :
         wait(100)
 
 ##############################################################################
+def scramble_cube() :
+    for n in range(scrambling_max) :
+        r = random.randint(-3, 3)
+        print("performing layer rotations", r)
+        rotate_cube_layer(r)
+
+        r = random.randint(1, 3)
+        print("performing flips", r)
+        flip_cube(r)
+
+    # show off scrambled cube
+    reset_arm()
+    rotate_table(6 * 90 + 45, table_max_speed)
+
+##############################################################################
+def scan_cube() :
+    x = 0
+
+##############################################################################
 # main
 
 init_all()
@@ -184,15 +218,5 @@ display("insert cube, and")
 display("press any button")
 pause()
 
-for n in range(scrambling_max) :
-    r = random.randint(-3, 3)
-    print("performing layer rotations", r)
-    rotate_cube_layer(r)
-
-    r = random.randint(1, 3)
-    print("performing flips", r)
-    flip_cube(r)
-
-# victory lap
-reset_arm()
-rotate_table(6 * 90 + 45, table_max_speed)
+scramble_cube()
+scan_cube()
