@@ -1,4 +1,3 @@
-#!/usr/bin/env pybricks-micropython
 #
 # The flipping arm is used to "flip" or "tilt": the cube: tumble it by a
 # quarter turn. It uses a large motor on port A.
@@ -8,7 +7,6 @@
 # See LICENSE file for licensing information
 #
 
-from pybricks import ev3brick as brick
 from pybricks.ev3devices import (Motor)
 from pybricks.parameters import (Port, Stop, Direction)
 from pybricks.tools import print, wait, StopWatch
@@ -46,7 +44,7 @@ def hold() :
     _move(flip_hold_angle, Stop.HOLD)
 
 ##############################################################################
-# Move the flipping arm TO the given angle
+# Move the flipping arm TO the given angle.
 # (internal method, hence the underscore prefix)
 def _move(angle, stop = Stop.COAST) :
     flip_motor.run_target(flip_speed, angle, stop)

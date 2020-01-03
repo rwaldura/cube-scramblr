@@ -59,6 +59,10 @@ def init() :
 ##############################################################################
 # Rotate the turntable BY the given angle
 def rotate(angle, correct = False) :
+    print("rotating angle:", angle)
+
+    if (angle == 0) : 
+        return
 
     # because the cube is not snug on the turntable, we must
     # overcorrect a bit to get the cube to align correctly
@@ -88,6 +92,6 @@ def _rotate(angle, speed = table_speed) :
     table_motor.run_angle(speed, angle, Stop.HOLD)
 
 ##############################################################################
-# Free lap run
+# Free lap run: 6.5 turns
 def spin() :
     _rotate(6 * 90 + 45, table_max_speed)

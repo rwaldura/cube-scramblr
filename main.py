@@ -100,10 +100,6 @@ def rotate_cube(n = 1, correct = False, flip_reset = True) :
     print("rotating cube:", n)
 
     angle = 90 * n
-    print("rotating angle:", angle)
-
-    if (angle == 0) : 
-        return
 
     turntable.rotate(angle, correct)
 
