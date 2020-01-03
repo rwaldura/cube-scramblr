@@ -28,11 +28,11 @@ import random, time
 scrambling_max = 10
 
 # "A" motor flips arm
-arm_motor = Motor(Port.A)
-arm_max_angle = 200
-arm_hold_angle = 120
-arm_min_angle = 5
-arm_speed = 300
+flip_motor = Motor(Port.A)
+flip_max_angle = 200
+flip_hold_angle = 120
+flip_min_angle = 0
+flip_speed = 300
 
 # "B" motor rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
@@ -42,7 +42,9 @@ table_motor.set_run_settings(table_speed, 2 * table_speed)
 table_epsilon = 20
 
 # "C" motor moves the scanning arm
-scan_motor = Motor(Port.C)
+scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
+scan_max_angle = -1
+scan_speed = 100
 
 # color sensor #1, to align the turntable
 table_sensor = ColorSensor(Port.S1)
@@ -61,22 +63,33 @@ def init_all() :
     brick.display.clear()
     display("CUBE SCRAMBLER")
 
-    init_flipping_arm()
+    init_flip_arm()
     init_turntable()
-    init_scanning_arm()
+    init_scan_arm()
 
     print("initialized all.")
 
 ##############################################################################
-def init_scanning_arm() :
-    # test scanning arm
-    scan_motor.run_until_stalled(20)
+def init_scan_arm() :
+    print("initializing scanning arm...")
+
+    scan_motor.run_until_stalled(-scan_speed)
     scan_motor.reset_angle(0)
+    print("zero found on scanning arm")
 
+    scan_motor.run_until_stalled(+scan_speed)
+    scan_max_angle = scan_motor.angle()
+    print("max angle for scanning arm", scan_max_angle)
 
+    # scan_max_angle is where we're looking at the center of the cube
+    # (scan_max_angle - 10) lets us look at the edge
+
+    reset_scan_arm()
 
 ##############################################################################
 def init_turntable() :
+    print("initializing turntable...")
+
     # go through a full rotation, seeking to maximize the reflection 
     # returned by the sensor
     table_motor.run(table_speed / 2)
@@ -88,7 +101,7 @@ def init_turntable() :
         wait(10) # sample 10 times per second
         r = table_sensor.reflection()
         a = table_motor.angle()
-        print("reflect", r, "at angle", a)
+        # print("reflect", r, "at angle", a)
         reflect[a] = r
 
     table_motor.stop()
@@ -104,20 +117,24 @@ def init_turntable() :
     table_motor.reset_angle(0)
 
 ##############################################################################
-def init_flipping_arm() :
+def init_flip_arm() :
     print("initializing flipping arm...")
 
     # bring it to its lowest position
-    arm_motor.run_until_stalled(-arm_speed)
-    arm_motor.reset_angle(0)
-    print("zero found")
+    flip_motor.run_until_stalled(-flip_speed)
+    flip_motor.reset_angle(0)
+    print("zero found on flipping arm")
 
 ##############################################################################
-def reset_arm() :
+def reset_flip_arm() :
     print("resetting flipping arm")
 
-    if (arm_motor.angle() > arm_min_angle) :
-        move_arm(arm_min_angle)
+    if (flip_motor.angle() > flip_min_angle) :
+        move_flip_arm(flip_min_angle)
+
+##############################################################################
+def reset_scan_arm() :
+    move_scan_arm(0)
 
 ##############################################################################
 # Rotate the turntable BY the given angle
@@ -126,19 +143,24 @@ def rotate_table(angle, speed = table_speed) :
 
 ##############################################################################
 # Move the flipping arm TO the given angle
-def move_arm(angle) :
-    arm_motor.run_target(arm_speed, angle, Stop.HOLD)
+def move_flip_arm(angle) :
+    flip_motor.run_target(flip_speed, angle, Stop.HOLD)
+
+##############################################################################
+# Move the scanning arm TO the given angle
+def move_scan_arm(angle) :
+    scan_motor.run_target(scan_speed, angle, Stop.HOLD)
 
 ##############################################################################
 # Flip the cube, i.e. tilt it by a quarter-turn
 def flip_cube(n = 1) :
     print("flipping cube:", n)
 
-    move_arm(arm_hold_angle)
+    move_flip_arm(flip_hold_angle)
 
     for i in range(n) :
-        move_arm(arm_max_angle)
-        move_arm(arm_hold_angle)
+        move_arm(flip_max_angle)
+        move_arm(flip_hold_angle)
 
 ##############################################################################
 # Rotate the bottom layer of the cube
@@ -146,16 +168,16 @@ def flip_cube(n = 1) :
 # counter-clockwise
 def rotate_cube_layer(n = 1) :
     print("rotating cube bottom layer:", n)
-    arm_motor.run_target(arm_speed, arm_hold_angle)
+    flip_motor.run_target(flip_speed, flip_hold_angle)
     rotate_cube(n, True, False)
 
 ##############################################################################
 # Rotate the entire cube
 # n is the number of quarter-turns: positive for clockwise, negative for 
 # counter-clockwise
-def rotate_cube(n = 1, correct = False, arm_reset = True) :
-    if (arm_reset) : 
-        reset_arm()
+def rotate_cube(n = 1, correct = False, flip_reset = True) :
+    if (flip_reset) : 
+        reset_flipping_arm()
 
     print("rotating cube:", n)
 
@@ -202,7 +224,7 @@ def scramble_cube() :
         flip_cube(r)
 
     # show off scrambled cube
-    reset_arm()
+    reset_flip_arm()
     rotate_table(6 * 90 + 45, table_max_speed)
 
 ##############################################################################
