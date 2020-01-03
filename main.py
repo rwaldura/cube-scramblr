@@ -21,6 +21,8 @@ from pybricks.robotics import DriveBase
 
 import random, time
 
+import turntable
+
 ##############################################################################
 # globals and constants
 
@@ -34,20 +36,10 @@ flip_hold_angle = 120
 flip_min_angle = 0
 flip_speed = 300
 
-# "B" motor rotates the turntable
-table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
-table_speed = 90
-table_max_speed = 2 * table_speed
-table_motor.set_run_settings(table_speed, 2 * table_speed)
-table_epsilon = 20
-
 # "C" motor moves the scanning arm
 scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
 scan_max_angle = -1
-scan_speed = 100
-
-# color sensor #1, to align the turntable
-table_sensor = ColorSensor(Port.S1)
+scan_speed = 50
 
 # color sensor #2, to scan the cube
 scan_sensor = ColorSensor(Port.S2)
@@ -64,7 +56,7 @@ def init_all() :
     display("CUBE SCRAMBLER")
 
     init_flip_arm()
-    init_turntable()
+    turntable.init()
     init_scan_arm()
 
     print("initialized all.")
@@ -87,36 +79,6 @@ def init_scan_arm() :
     reset_scan_arm()
 
 ##############################################################################
-def init_turntable() :
-    print("initializing turntable...")
-
-    # go through a full rotation, seeking to maximize the reflection 
-    # returned by the sensor
-    table_motor.run(table_speed / 2)
-
-    # record the reflection for each angle
-    reflect = [0] * 400
-
-    while (table_motor.angle() < 360) :
-        wait(10) # sample 10 times per second
-        r = table_sensor.reflection()
-        a = table_motor.angle()
-        # print("reflect", r, "at angle", a)
-        reflect[a] = r
-
-    table_motor.stop()
-
-    # find the highest reflection angle
-    max_angle = reflect.index(max(reflect))
-    print("found highest reflection", reflect[max_angle], "at angle", max_angle)
-
-    # correct to get a straight angle on the table
-    angle_reflection_epsilon = 7
-
-    table_motor.run_target(table_speed, max_angle + angle_reflection_epsilon, Stop.HOLD)
-    table_motor.reset_angle(0)
-
-##############################################################################
 def init_flip_arm() :
     print("initializing flipping arm...")
 
@@ -135,11 +97,6 @@ def reset_flip_arm() :
 ##############################################################################
 def reset_scan_arm() :
     move_scan_arm(0)
-
-##############################################################################
-# Rotate the turntable BY the given angle
-def rotate_table(angle, speed = table_speed) :
-    table_motor.run_angle(speed, angle, Stop.HOLD)
 
 ##############################################################################
 # Move the flipping arm TO the given angle
@@ -183,28 +140,11 @@ def rotate_cube(n = 1, correct = False, flip_reset = True) :
 
     angle = 90 * n
     print("rotating angle:", angle)
+
     if (angle == 0) : 
         return
 
-    # because the cube is not snug on the turntable, we must
-    # overcorrect a bit to get the cube to align correctly
-    if (correct) :
-        if (n > 0) : 
-            angle += table_epsilon
-        else :
-            angle -= table_epsilon
-
-    print("corrected angle:", angle)
-    rotate_table(angle)
-
-    if (correct) :
-        if (n > 0) : 
-            angle = -table_epsilon
-        else :
-            angle = +table_epsilon
-
-        print("re-corrected angle:", angle)
-        rotate_table(angle)
+    turntable.rotate(angle, correct)
 
 ##############################################################################
 # Wait until any of the buttons are pressed
@@ -225,7 +165,7 @@ def scramble_cube() :
 
     # show off scrambled cube
     reset_flip_arm()
-    rotate_table(6 * 90 + 45, table_max_speed)
+    turntable.spin()
 
 ##############################################################################
 def scan_cube() :
