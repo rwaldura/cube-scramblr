@@ -7,6 +7,5 @@ Written in [MicroPython, running on ev3dev](https://education.lego.com/en-us/sup
 If these links have become stale, and essential files cannot be located (structure build file, 
 MicroPython manual, and SD card image for EV3), you may contact me for backup copies.
 
-
-[//]: # https://drive.google.com/drive/u/0/folders/1jUdjHS22F1zwnxoQA3R3IfTaT3J7NjvH
+<!-- https://drive.google.com/drive/u/0/folders/1jUdjHS22F1zwnxoQA3R3IfTaT3J7NjvH -->
 
