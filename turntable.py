@@ -89,7 +89,7 @@ def rotate(angle, correct = False) :
 # (internal method, hence the underscore in prefix)
 def _rotate(angle, speed = table_speed) :
     print("rotating turntable by", angle)
-    table_motor.run_angle(speed, angle, Stop.HOLD)
+    table_motor.run_angle(speed, angle, Stop.BRAKE)
 
 ##############################################################################
 # Free lap run: 6.5 turns
@@ -97,6 +97,7 @@ def spin() :
     _rotate(6 * 90 + 45, table_max_speed)
 
 ##############################################################################
-# Move the next facelet; used while scanning
+# Move to the next facelet; used while scanning each of the 9 facelets on a 
+# cube face
 def next_facelet() :
-    _rotate(360 / 8)
+    _rotate(360 / 9)

@@ -17,12 +17,14 @@ from pybricks.tools import print, wait, StopWatch
 # "C" motor moves the scanning arm
 scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
 scan_speed = 100
-scan_center_angle = 250 
+scan_center_angle = 260 # positions the head on top of center facelet
 scan_edge_angle = scan_center_angle - 60
-scan_corner_angle = scan_center_angle - 70
+scan_corner_angle = scan_center_angle - 80
 
 # color sensor #2, to scan the cube
 scan_sensor = ColorSensor(Port.S2)
+scan_sensor_max_attempts = 5
+scan_read_epsilon = 2 # to re-try color reads
 
 ##############################################################################
 def init() :
@@ -49,7 +51,7 @@ def move_edge() :
 
 ##############################################################################
 # Move the arm to scan a corner facelet
-def move_edge() :
+def move_corner() :
     _move(scan_corner_angle)
 
 ##############################################################################
@@ -60,4 +62,28 @@ def move_center() :
 ##############################################################################
 # Read the color underneath the sensor
 def read_color() :
-    return scan_sensor.color()
+    color = None
+    attempts = 0
+    
+    while (True) :
+        color = scan_sensor.color()
+        attempts += 1
+
+        if (color != None) :
+            break # success
+        elif (attempts >= scan_sensor_max_attempts) :
+            print("no color read after multiple attempts, giving up")
+            break
+        else : # try again
+            print("no color read, trying again")
+
+            epsilon = 0
+            if (attempts % 2 == 0) :
+                epsilon = (-1) * attempts * scan_read_epsilon
+            else :
+                epsilon = attempts * scan_read_epsilon
+
+            # adjust scanning head by a small amount
+            _move_offset(epsilon)
+
+    return color

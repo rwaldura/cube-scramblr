@@ -29,13 +29,13 @@ scrambling_moves = 10
 cube = {}
 
 color2str = { 
-    Color.BROWN:"brown", 
-    Color.GREEN:"green",
-    Color.BLACK:"black",
-    Color.WHITE:"white",
-    Color.RED:"red",
-    Color.BLUE:"blue",
-    Color.YELLOW:"yellow" 
+    Color.BROWN  : "brown", 
+    Color.GREEN  : "green",
+    Color.BLACK  : "black",
+    Color.WHITE  : "white",
+    Color.RED    : "red",
+    Color.BLUE   : "blue",
+    Color.YELLOW : "yellow" 
     }
 
 ##############################################################################
@@ -132,14 +132,21 @@ def scan_cube_face(face_num) :
     cube[face_color] = facelets
 
     # read each facelet in turn
-    for i in range(8) :
-        if (i % 2 == 0) :
+    for facelet in range(8) :
+        if (facelet % 2 == 0) :
             scan_arm.move_edge()
         else :
             scan_arm.move_corner()
 
-        facelets[i] = scan_arm.read_color()
-        print("facelet", i, "color", color2str[facelets[i]])
+        facelet_color = scan_arm.read_color()
+
+        if (facelet_color == None) :
+            print("unable to read color of facelet", facelet)
+            # this is a critical error, how to handle it? 
+        else :
+            print("facelet", i, "color", color2str[facelet_color])
+        
+        facelets[facelet] = facelet_color
         turntable.next_facelet()
 
     turntable.next_facelet()
