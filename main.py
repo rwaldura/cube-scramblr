@@ -28,6 +28,16 @@ scrambling_moves = 10
 # cube faces, indexed by color of the central facelet
 cube = {}
 
+color2str = { 
+    Color.BROWN:"brown", 
+    Color.GREEN:"green",
+    Color.BLACK:"black",
+    Color.WHITE:"white",
+    Color.RED:"red",
+    Color.BLUE:"blue",
+    Color.YELLOW:"yellow" 
+    }
+
 ##############################################################################
 def display(mesg) :
     brick.display.text(mesg)
@@ -116,7 +126,7 @@ def scan_cube_face(face_num) :
     # bring arm to center, and read the color of the center facelet
     scan_arm.move_center()
     face_color = scan_arm.read_color()
-    print("current face", face_num, "has color", face_color)
+    print("current face", face_num, "has color", color2str[face_color])
 
     facelets = [Color.BLACK] * 8
     cube[face_color] = facelets
@@ -129,7 +139,7 @@ def scan_cube_face(face_num) :
             scan_arm.move_corner()
 
         facelets[i] = scan_arm.read_color()
-        print("facelet", i, "color", facelets[i])
+        print("facelet", i, "color", color2str[facelets[i]])
         turntable.next_facelet()
 
     turntable.next_facelet()
