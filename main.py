@@ -121,14 +121,18 @@ def scan_cube_face(face_num) :
     facelets = [Color.BLACK] * 8
     cube[face_color] = facelets
 
-    scan_arm.move_edge()
-
     # read each facelet in turn
     for i in range(8) :
+        if (i % 2 == 0) :
+            scan_arm.move_edge()
+        else :
+            scan_arm.move_corner()
+
         facelets[i] = scan_arm.read_color()
         print("facelet", i, "color", facelets[i])
         turntable.next_facelet()
 
+    turntable.next_facelet()
     scan_arm.reset()
 
 ##############################################################################

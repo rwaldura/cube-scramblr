@@ -19,6 +19,7 @@ scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
 scan_speed = 100
 scan_center_angle = 250 
 scan_edge_angle = scan_center_angle - 60
+scan_corner_angle = scan_center_angle - 70
 
 # color sensor #2, to scan the cube
 scan_sensor = ColorSensor(Port.S2)
@@ -45,6 +46,11 @@ def _move(angle) :
 # Move the arm to scan an edge facelet
 def move_edge() :
     _move(scan_edge_angle)
+
+##############################################################################
+# Move the arm to scan a corner facelet
+def move_edge() :
+    _move(scan_corner_angle)
 
 ##############################################################################
 # Move the arm to scan the center facelet
