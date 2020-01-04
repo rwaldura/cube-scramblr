@@ -11,6 +11,8 @@
 # See LICENSE file for licensing information
 #
 
+from pybricks import ev3brick as brick 
+from pybricks.parameters import (Port, Stop, Direction, Color)
 from pybricks.tools import print, wait, StopWatch
 
 import random, time
@@ -21,7 +23,7 @@ import turntable, flip_arm, scan_arm
 # globals and constants
 
 # total number of scrambling moves: flips and rotations
-scrambling_max = 10
+scrambling_moves = 10
 
 # cube faces, indexed by color of the central facelet
 cube = {}
@@ -71,19 +73,22 @@ def pause() :
         wait(100)
 
 ##############################################################################
-def flip_cube(n = 1) :
+def flip_cube(n = 1, reset_arm = False) :
     flip_arm.flip_cube(n)
+
+    if (reset_arm) : 
+        flip_arm.reset()
 
 ##############################################################################
 def scramble_cube() :
-    for n in range(scrambling_max) :
+    for n in range(scrambling_moves) :
         r = random.randint(-3, 3)
         print("performing layer rotations", r)
         rotate_cube_layer(r)
 
-        r = random.randint(1, 3)
-        print("performing flips", r)
-        flip_cube(r)
+        f = random.randint(1, 3)
+        print("performing flips", f)
+        flip_cube(f)
 
     # show off scrambled cube
     flip_arm.reset()
@@ -93,26 +98,27 @@ def scramble_cube() :
 # Visit all 6 faces of the cube, scanning each one.
 def scan_cube() :
     for face in range(4) :
-        flip_cube()
+        flip_cube(1, True)
         scan_cube_face(face)
+        pause()
 
     rotate_cube()
-    flip_cube()
+    flip_cube(1, True)
     scan_cube_face()
 
-    flip_cube(2)
+    flip_cube(2, True)
     scan_cube_face()
 
 ##############################################################################
 def scan_cube_face(face_num) :
     print("scanning face", face_num, "...")
-    
+
     # bring arm to center, and read the color of the center facelet
     scan_arm.move_center()
     face_color = scan_arm.read_color()
     print("current face", face_num, "has color", face_color)
 
-    facelets = [Color.BLACK] x 8
+    facelets = [Color.BLACK] * 8
     cube[face_color] = facelets
 
     scan_arm.move_edge()
@@ -122,6 +128,8 @@ def scan_cube_face(face_num) :
         facelets[i] = scan_arm.read_color()
         print("facelet", i, "color", facelets[i])
         turntable.next_facelet()
+
+    scan_arm.reset()
 
 ##############################################################################
 # main

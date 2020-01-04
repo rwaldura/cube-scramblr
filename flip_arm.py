@@ -41,12 +41,13 @@ def reset() :
 # Move the flipping arm to an angle that blocks the cube in place,
 # and lets us rotate its bottom layer.
 def hold() :
-    _move(flip_hold_angle, Stop.HOLD)
+    _move(flip_hold_angle)
 
 ##############################################################################
 # Move the flipping arm TO the given angle.
 # (internal method, hence the underscore prefix)
 def _move(angle, stop = Stop.COAST) :
+    print("moving flipping arm to", angle)
     flip_motor.run_target(flip_speed, angle, stop)
 
 ##############################################################################

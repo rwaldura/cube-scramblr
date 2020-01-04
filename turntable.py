@@ -82,13 +82,13 @@ def rotate(angle, correct = False) :
         else :
             angle = +table_epsilon
 
-        print("re-corrected angle:", angle)
         _rotate(angle)
 
 ##############################################################################
 # Rotate the turntable BY the given angle
 # (internal method, hence the underscore in prefix)
 def _rotate(angle, speed = table_speed) :
+    print("rotating turntable by", angle)
     table_motor.run_angle(speed, angle, Stop.HOLD)
 
 ##############################################################################
