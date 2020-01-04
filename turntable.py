@@ -95,3 +95,8 @@ def _rotate(angle, speed = table_speed) :
 # Free lap run: 6.5 turns
 def spin() :
     _rotate(6 * 90 + 45, table_max_speed)
+
+##############################################################################
+# Move the next facelet; used while scanning
+def next_facelet() :
+    _rotate(360 / 8)

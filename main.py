@@ -23,6 +23,9 @@ import turntable, flip_arm, scan_arm
 # total number of scrambling moves: flips and rotations
 scrambling_max = 10
 
+# cube faces, indexed by color of the central facelet
+cube = {}
+
 ##############################################################################
 def display(mesg) :
     brick.display.text(mesg)
@@ -68,6 +71,10 @@ def pause() :
         wait(100)
 
 ##############################################################################
+def flip_cube(n = 1) :
+    flip_arm.flip_cube(n)
+
+##############################################################################
 def scramble_cube() :
     for n in range(scrambling_max) :
         r = random.randint(-3, 3)
@@ -76,15 +83,45 @@ def scramble_cube() :
 
         r = random.randint(1, 3)
         print("performing flips", r)
-        flip_arm.flip_cube(r)
+        flip_cube(r)
 
     # show off scrambled cube
     flip_arm.reset()
     turntable.spin()
 
 ##############################################################################
+# Visit all 6 faces of the cube, scanning each one.
 def scan_cube() :
-    x = 0
+    for face in range(4) :
+        flip_cube()
+        scan_cube_face(face)
+
+    rotate_cube()
+    flip_cube()
+    scan_cube_face()
+
+    flip_cube(2)
+    scan_cube_face()
+
+##############################################################################
+def scan_cube_face(face_num) :
+    print("scanning face", face_num, "...")
+    
+    # bring arm to center, and read the color of the center facelet
+    scan_arm.move_center()
+    face_color = scan_arm.read_color()
+    print("current face", face_num, "has color", face_color)
+
+    facelets = [Color.BLACK] x 8
+    cube[face_color] = facelets
+
+    scan_arm.move_edge()
+
+    # read each facelet in turn
+    for i in range(8) :
+        facelets[i] = scan_arm.read_color()
+        print("facelet", i, "color", facelets[i])
+        turntable.next_facelet()
 
 ##############################################################################
 # main
@@ -95,5 +132,5 @@ display("insert cube, and")
 display("press any button")
 pause()
 
-scramble_cube()
+# scramble_cube()
 scan_cube()
