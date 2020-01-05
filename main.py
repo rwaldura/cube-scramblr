@@ -149,6 +149,7 @@ init_all()
 
 display("insert cube, and")
 display("press any button")
+brick.sound.beep()
 pause()
 
 # scramble_cube()
