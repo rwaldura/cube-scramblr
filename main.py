@@ -17,7 +17,7 @@ from pybricks.tools import print, wait, StopWatch
 
 import random, time
 
-import turntable, flip_arm, scan_arm
+import turntable, flip_arm, scan_arm, color_utils
 
 ##############################################################################
 # globals and constants
@@ -27,16 +27,6 @@ scrambling_moves = 10
 
 # cube faces, indexed by color of the central facelet
 cube = {}
-
-color2str = { 
-    Color.BROWN  : "brown", 
-    Color.GREEN  : "green",
-    Color.BLACK  : "black",
-    Color.WHITE  : "white",
-    Color.RED    : "red",
-    Color.BLUE   : "blue",
-    Color.YELLOW : "yellow" 
-    }
 
 ##############################################################################
 def display(mesg) :
@@ -83,11 +73,8 @@ def pause() :
         wait(100)
 
 ##############################################################################
-def flip_cube(n = 1, reset_arm = False) :
-    flip_arm.flip_cube(n)
-
-    if (reset_arm) : 
-        flip_arm.reset()
+def flip_cube(n, reset_arm) :
+    flip_arm.flip_cube(n, reset_arm)
 
 ##############################################################################
 def scramble_cube() :
@@ -98,7 +85,7 @@ def scramble_cube() :
 
         f = random.randint(1, 3)
         print("performing flips", f)
-        flip_cube(f)
+        flip_cube(f, False)
 
     # show off scrambled cube
     flip_arm.reset()
@@ -110,14 +97,14 @@ def scan_cube() :
     for face in range(4) :
         flip_cube(1, True)
         scan_cube_face(face)
-        pause()
+        # pause()
 
     rotate_cube()
     flip_cube(1, True)
-    scan_cube_face()
+    scan_cube_face(5)
 
     flip_cube(2, True)
-    scan_cube_face()
+    scan_cube_face(6)
 
 ##############################################################################
 def scan_cube_face(face_num) :
@@ -126,7 +113,10 @@ def scan_cube_face(face_num) :
     # bring arm to center, and read the color of the center facelet
     scan_arm.move_center()
     face_color = scan_arm.read_color()
-    print("current face", face_num, "has color", color2str[face_color])
+    print("current face", face_num, "has color:", color_utils.color2str(face_color))
+    scan_arm.reset()
+
+    return
 
     facelets = [Color.BLACK] * 8
     cube[face_color] = facelets
@@ -141,10 +131,10 @@ def scan_cube_face(face_num) :
         facelet_color = scan_arm.read_color()
 
         if (facelet_color == None) :
-            print("unable to read color of facelet", facelet)
+            print("ERROR - unable to read color of facelet", facelet)
             # this is a critical error, how to handle it? 
         else :
-            print("facelet", i, "color", color2str[facelet_color])
+            print("facelet", facelet, "color", color_utils.color2str(facelet_color))
         
         facelets[facelet] = facelet_color
         turntable.next_facelet()

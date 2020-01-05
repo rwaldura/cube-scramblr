@@ -52,11 +52,13 @@ def _move(angle, stop = Stop.COAST) :
 
 ##############################################################################
 # Flip the cube, i.e. tilt it by a quarter-turn
-def flip_cube(n = 1) :
+def flip_cube(n, reset_arm) :
     print("flipping cube:", n)
-
-    hold()
 
     for i in range(n) :
         _move(flip_max_angle)
-        hold()
+
+        if (i == n - 1 and reset_arm) :
+            reset()
+        else :
+            hold()

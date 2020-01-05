@@ -19,9 +19,8 @@ from pybricks.tools import print, wait, StopWatch
 # "B" motor rotates the turntable
 table_motor = Motor(Port.B, Direction.CLOCKWISE, [12, 36])
 table_speed = 90
-table_max_speed = 2 * table_speed
-table_motor.set_run_settings(table_speed, 2 * table_speed)
-table_epsilon = 20
+#table_motor.set_run_settings(table_speed, 2 * table_speed)
+table_epsilon = 22
 
 # color sensor #1, to align the turntable
 table_sensor = ColorSensor(Port.S1)
@@ -53,7 +52,7 @@ def init() :
     # correct to get a straight angle on the table
     angle_reflection_epsilon = 7
 
-    table_motor.run_target(table_speed, max_angle + angle_reflection_epsilon, Stop.HOLD)
+    _rotate(max_angle + angle_reflection_epsilon)
     table_motor.reset_angle(0)
 
 ##############################################################################
@@ -94,10 +93,10 @@ def _rotate(angle, speed = table_speed) :
 ##############################################################################
 # Free lap run: 6.5 turns
 def spin() :
-    _rotate(6 * 90 + 45, table_max_speed)
+    _rotate(6 * 90 + 45, table_speed * 2)
 
 ##############################################################################
 # Move to the next facelet; used while scanning each of the 9 facelets on a 
 # cube face
 def next_facelet() :
-    _rotate(360 / 9)
+    _rotate(45, table_speed / 2)
