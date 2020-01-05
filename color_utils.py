@@ -31,3 +31,8 @@ def color2str(color) :
         return "purple"    
     else :
         return ""
+
+##############################################################################
+# Map a R/G/B dict to a known Color constant
+def rgb2color(rgb) :
+    return Color.PURPLE

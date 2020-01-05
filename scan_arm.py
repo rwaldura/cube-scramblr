@@ -20,7 +20,7 @@ import color_utils
 scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
 scan_speed = 100
 scan_center_angle = 250 # positions the head on top of center facelet
-scan_min_angle = 130
+scan_min_angle = 150
 scan_edge_angle = scan_center_angle - 50
 scan_corner_angle = scan_center_angle - 90
 
@@ -75,8 +75,7 @@ def move_center() :
 def _read_color_avg() :
     num_samples = 5
 
-    color_samples = [0] * num_samples
-    color_samples_rgb = { 
+    rgb_samples = { 
         'r' : [0] * num_samples,
         'g' : [0] * num_samples,
         'b' : [0] * num_samples 
@@ -84,30 +83,20 @@ def _read_color_avg() :
 
     for i in range(num_samples) :
         color_sample = scan_sensor.color()
-        print("read #", i, "color=", color_sample)
-        color_samples[i] = color_sample
+        print("read #", i, "color=", color_utils.color2str(color_sample))
         
         (r,g,b) = scan_sensor.rgb()
-        color_samples_rgb['r'][i] = r
-        color_samples_rgb['g'][i] = g
-        color_samples_rgb['b'][i] = b        
+        rgb_samples['r'][i] = r
+        rgb_samples['g'][i] = g
+        rgb_samples['b'][i] = b        
 
-    avg_color = round(sum(color_samples) / num_samples)
-    print("average color", avg_color)
-    return avg_color
-
-    avg_color_rgb = {
-        'r' : sum(color_samples['r']) / num_samples,
-        'g' : sum(color_samples['g']) / num_samples,
-        'b' : sum(color_samples['b']) / num_samples
+    mean_rgb = {
+        'r' : sum(rgb_samples['r']) / num_samples,
+        'g' : sum(rgb_samples['g']) / num_samples,
+        'b' : sum(rgb_samples['b']) / num_samples
     }
 
-    return _get_color(avg_color)
-
-##############################################################################
-# Return a Color constant from a R/G/B color dict.
-def _get_color(color) :
-    return Color.BLACK
+    return color_utils.rgb2color(mean_rgb)
 
 ##############################################################################
 # Read the color underneath the sensor
