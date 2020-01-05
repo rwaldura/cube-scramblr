@@ -21,12 +21,12 @@ scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
 scan_speed = 100
 scan_center_angle = 250 # positions the head on top of center facelet
 scan_min_angle = 150
-scan_edge_angle = scan_center_angle - 50
+scan_edge_angle = scan_center_angle - 40
 scan_corner_angle = scan_center_angle - 90
 
 # color sensor #2, to scan the cube
 scan_sensor = ColorSensor(Port.S2)
-scan_sensor_max_attempts = 10
+scan_sensor_max_attempts = 5
 scan_read_epsilon = 5 # to re-try color reads
 
 ##############################################################################
@@ -72,8 +72,9 @@ def move_center() :
 
 ##############################################################################
 # Sample color 5 times, pick the average
-def _read_color_avg() :
-    num_samples = 5
+# Returns a R,G,B dict
+def _read_rgb_avg() :
+    num_samples = 10
 
     rgb_samples = { 
         'r' : [0] * num_samples,
@@ -90,13 +91,11 @@ def _read_color_avg() :
         rgb_samples['g'][i] = g
         rgb_samples['b'][i] = b        
 
-    mean_rgb = {
+    return {
         'r' : sum(rgb_samples['r']) / num_samples,
         'g' : sum(rgb_samples['g']) / num_samples,
         'b' : sum(rgb_samples['b']) / num_samples
     }
-
-    return color_utils.rgb2color(mean_rgb)
 
 ##############################################################################
 # Read the color underneath the sensor
@@ -105,22 +104,20 @@ def read_color() :
     attempts = 0
 
     while (True) :
-        color = _read_color_avg()
-    
+        color = color_utils.rgb2color(_read_rgb_avg())
         attempts += 1
 
-        if (color != None) :
-            break # success
-        elif (attempts >= scan_sensor_max_attempts) :
+        if (attempts >= scan_sensor_max_attempts) :
             print("no color read after multiple attempts, giving up")
             break
-        else :
-            print("no color read, trying again; attempt", attempts)
+        elif (not color_utils.is_valid(color)) :
+            print("no/bad color read, trying again; attempt", attempts)
 
             # adjust scanning head, and try again
             epsilon = attempts * scan_read_epsilon
             if (attempts % 2 == 0) :
                 epsilon = -epsilon
             _offset(epsilon)
-
+        else : # success
+            break
     return color

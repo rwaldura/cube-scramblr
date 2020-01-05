@@ -97,7 +97,7 @@ def scan_cube() :
     for face in range(4) :
         flip_cube(1, True)
         scan_cube_face(face)
-        # pause()
+        pause()
 
     rotate_cube()
     flip_cube(1, True)
@@ -142,6 +142,23 @@ def scan_cube_face(face_num) :
     turntable.next_facelet()
     scan_arm.reset()
 
+
+##############################################################################
+# Calibrate the color sensor; only used during development
+def calibrate_color_sensor() :
+    while (True) :
+        scan_arm.move_edge()
+
+        rgb = scan_arm._read_rgb_avg()
+        print("edge color", rgb['r'], rgb['g'], rgb['b'])
+
+        color = scan_arm.read_color()
+        print("edge color", color_utils.color2str(color))
+
+        scan_arm.reset()
+        brick.sound.beep()
+        pause()
+
 ##############################################################################
 # main
 
@@ -154,3 +171,5 @@ pause()
 
 # scramble_cube()
 scan_cube()
+
+# calibrate_color_sensor()
