@@ -11,6 +11,7 @@ from pybricks.tools import print
 
 import math
 
+# in 100-based RGB space
 KNOWN_COLORS = [
     { 'r':  -1, 'g':  -1, 'b':  -1 }, # None
     { 'r':   0, 'g':   0, 'b':   0 }, # black
@@ -19,7 +20,7 @@ KNOWN_COLORS = [
     { 'r': 100, 'g': 100, 'b':   0 }, # yellow
     { 'r': 100, 'g':   0, 'b':   0 }, # red
     { 'r': 100, 'g': 100, 'b': 100 }, # white
-    { 'r':  50, 'g':  50, 'b':   0 }, # brown
+    { 'r':  50, 'g':  25, 'b':   0 }, # brown
     { 'r': 100, 'g':  50, 'b':   0 }, # orange
     { 'r':  50, 'g':   0, 'b':  50 }  # purple
     # { 'r': 100, 'g':   0, 'b': 100 }, # pink
