@@ -146,12 +146,16 @@ def scan_cube_face(face_num) :
 def calibrate_color_sensor() :
     while (True) :
         scan_arm.move_edge()
-
         rgb = scan_arm._read_rgb_avg()
         print("edge color", rgb['r'], rgb['g'], rgb['b'])
-
         color = scan_arm.read_color()
         print("edge color mapped to", color2str(color))
+
+        scan_arm.move_center()
+        rgb = scan_arm._read_rgb_avg()
+        print("center color", rgb['r'], rgb['g'], rgb['b'])
+        color = scan_arm.read_color()
+        print("center color mapped to", color2str(color))
 
         scan_arm.reset()
         pause()

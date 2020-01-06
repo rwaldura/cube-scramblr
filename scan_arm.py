@@ -28,6 +28,7 @@ scan_corner_angle = scan_center_angle - 70
 scan_sensor = ColorSensor(Port.S2)
 scan_sensor_max_attempts = 5
 scan_read_epsilon = 5 # to re-try color reads
+default_num_samples = 5
 
 ##############################################################################
 def init() :
@@ -73,8 +74,7 @@ def move_center() :
 ##############################################################################
 # Sample color multiple times, and pick the average
 # Returns a R,G,B dict
-def _read_rgb_avg() :
-    num_samples = 10
+def _read_rgb_avg(num_samples = default_num_samples) :
 
     rgb_samples = { 
         'r' : [0] * num_samples,
@@ -85,6 +85,8 @@ def _read_rgb_avg() :
     for i in range(num_samples) :
         # color_sample = scan_sensor.color()
         # print("read #", i, "color=", color_utils.color2str(color_sample))
+        ## this function does not read cube colors well; e.g. yellow is 
+        ## often mapped to white; orange to brown
         
         (r,g,b) = scan_sensor.rgb()
         rgb_samples['r'][i] = r
@@ -107,10 +109,11 @@ def read_color() :
         color = color_utils.rgb2color(_read_rgb_avg())
         attempts += 1
 
-        if (color_utils.is_valid(color)) :
+        if (color_utils.is_cube_color(color)) :
             break # success
         elif (attempts >= scan_sensor_max_attempts) :
             print("no valid color read after multiple attempts, giving up")
+            color = None
             break
         else :
             print("invalid color read, trying again; attempt", attempts)

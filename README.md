@@ -13,3 +13,5 @@ MicroPython manual, and SD card image for EV3), you may contact me for backup co
 As of January 2020, this program can scramble the cube, and read its scrambled state; it cannot yet
 resolve the cube.
 
+TODO: verify a valid cube was scanned, once scanning is complete.
+TODO: integrate https://github.com/muodov/kociemba for solving.

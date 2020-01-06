@@ -1,5 +1,6 @@
 #
 # Utility functions to deal with EV3 colors.
+# The EV3 color sensor does not reliably recognize cube colors.
 #
 # by Ren Waldura ren+lego@waldura.org, 2020
 #
@@ -111,5 +112,5 @@ def _distance(x, y) :
 
 ##############################################################################
 # Allowed colors for the cube
-def is_valid(color) :
+def is_cube_color(color) :
     return color in CUBE_COLORS
