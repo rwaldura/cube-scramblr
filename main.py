@@ -26,7 +26,7 @@ import turntable, flip_arm, scan_arm, color_utils
 scrambling_moves = 10
 
 # cube faces, indexed by color of the central facelet
-cube = {}
+cube = [None] * (1 + max(color_utils.CUBE_COLORS))
 
 ##############################################################################
 def display(mesg) :
@@ -37,7 +37,7 @@ def init_all() :
     random.seed(int(time.time()))
 
     brick.display.clear()
-    display("CUBE SCRAMBLER")
+    display("CUBE SCRAMBL3R")
 
     flip_arm.init()
     turntable.init()
@@ -107,6 +107,9 @@ def scan_cube() :
     scan_cube_face(6)
 
 ##############################################################################
+# Scan an entire face of the cube, starting with the center facelet.
+# We also populate the cube[] array with the facelet colors.
+# @todo this needs work!
 def scan_cube_face(face_num) :
     print("scanning face", face_num, "...")
 
