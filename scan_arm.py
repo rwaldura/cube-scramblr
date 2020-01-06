@@ -107,17 +107,18 @@ def read_color() :
         color = color_utils.rgb2color(_read_rgb_avg())
         attempts += 1
 
-        if (attempts >= scan_sensor_max_attempts) :
-            print("no color read after multiple attempts, giving up")
+        if (color_utils.is_valid(color)) :
+            break # success
+        elif (attempts >= scan_sensor_max_attempts) :
+            print("no valid color read after multiple attempts, giving up")
             break
-        elif (not color_utils.is_valid(color)) :
-            print("no/bad color read, trying again; attempt", attempts)
+        else :
+            print("invalid color read, trying again; attempt", attempts)
 
             # adjust scanning head, and try again
             epsilon = attempts * scan_read_epsilon
             if (attempts % 2 == 0) :
                 epsilon = -epsilon
             _offset(epsilon)
-        else : # success
-            break
+        
     return color

@@ -14,7 +14,8 @@ from pybricks.tools import print, wait, StopWatch
 
 import random, time
 
-import turntable, flip_arm, scan_arm, color_utils
+import turntable, flip_arm, scan_arm
+from color_utils import color2str
 
 ##############################################################################
 # globals and constants
@@ -28,6 +29,14 @@ cube = [None] * (1 + max(color_utils.CUBE_COLORS))
 ##############################################################################
 def display(mesg) :
     brick.display.text(mesg)
+
+##############################################################################
+# Wait until any of the buttons are pressed
+def pause() :
+    display("press any button")
+    brick.sound.beep()
+    while not any(brick.buttons()):
+        wait(200)
 
 ##############################################################################
 def init_all() :
@@ -62,12 +71,6 @@ def rotate_cube(n = 1, correct = False, flip_reset = True) :
     print("rotating cube:", n)
 
     turntable.rotate(90 * n, correct)
-
-##############################################################################
-# Wait until any of the buttons are pressed
-def pause() :
-    while not any(brick.buttons()):
-        wait(200)
 
 ##############################################################################
 def flip_cube(n, reset_arm) :
@@ -117,7 +120,7 @@ def scan_cube_face(face_num) :
     # bring arm to center, and read the color of the center facelet
     scan_arm.move_center()
     face_color = scan_arm.read_color()
-    print("current face", face_num, "has color:", color_utils.color2str(face_color))
+    print("current face", face_num, "has color:", color2str(face_color))
 
     facelets = [Color.BLACK] * 8
     cube[face_color] = facelets
@@ -133,7 +136,7 @@ def scan_cube_face(face_num) :
             scan_arm.move_corner()
 
         facelets[facelet] = scan_arm.read_color()
-        print("facelet", facelet, "color", color_utils.color2str(facelets[facelet]))
+        print("facelet", facelet, "color", color2str(facelets[facelet]))
 
     turntable.reset() # eliminate any drift accumulated during facelet scanning 
     scan_arm.reset()
@@ -148,10 +151,9 @@ def calibrate_color_sensor() :
         print("edge color", rgb['r'], rgb['g'], rgb['b'])
 
         color = scan_arm.read_color()
-        print("edge color", color_utils.color2str(color))
+        print("edge color mapped to", color2str(color))
 
         scan_arm.reset()
-        brick.sound.beep()
         pause()
 
 ##############################################################################
@@ -159,9 +161,7 @@ def calibrate_color_sensor() :
 
 init_all()
 
-display("insert cube, and")
-display("press any button")
-brick.sound.beep()
+display("insert cube")
 pause()
 
 # scramble_cube()
