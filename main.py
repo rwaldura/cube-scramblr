@@ -3,9 +3,6 @@
 # The structure, the build, is based off David Gilday's MindCub3r
 # at https://www.mindcuber.com/mindcub3r/mindcub3r.html
 #
-# The language, MicroPython, is documented at
-# https://education.lego.com/en-us/support/mindstorms-ev3/python-for-ev3
-#
 # by Ren Waldura ren+lego@waldura.org, 2020
 #
 # See LICENSE file for licensing information
@@ -93,15 +90,19 @@ def scramble_cube() :
 
 ##############################################################################
 # Visit all 6 faces of the cube, scanning each one.
-def scan_cube() :
+def scan_cube(debug = False) :
     for face in range(4) :
         flip_cube(1, True)
         scan_cube_face(face)
-        pause()
+        if (debug) :
+            pause()
 
     rotate_cube()
     flip_cube(1, True)
     scan_cube_face(5)
+
+    if (debug) :
+        pause()
 
     flip_cube(2, True)
     scan_cube_face(6)
@@ -164,6 +165,6 @@ brick.sound.beep()
 pause()
 
 # scramble_cube()
-scan_cube()
+scan_cube(True)
 
 # calibrate_color_sensor()

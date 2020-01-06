@@ -1,6 +1,6 @@
 #
 # Turntable: the rotating platform that holds the cube, and rotates it 
-# in the horizontal plane, i.e. along its vertical axis.
+# in the horizontal plane, i.e. around its vertical axis.
 #
 # It uses a large motor on port B, and a color sensor on port 1.
 #

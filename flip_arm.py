@@ -26,7 +26,7 @@ def init() :
     print("initializing flipping arm...")
 
     # bring it to its lowest position
-    flip_motor.run_until_stalled(-flip_speed)
+    flip_motor.run_until_stalled(-flip_speed / 2)
     flip_motor.reset_angle(0)
     print("zero found on flipping arm")
 
@@ -58,6 +58,8 @@ def flip_cube(n, reset_arm) :
     for i in range(n) :
         _move(flip_max_angle)
 
+        # optimization: skip an intermediary step, if going all the way back
+        # to zero anyway 
         if (i == n - 1 and reset_arm) :
             reset()
         else :

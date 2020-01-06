@@ -11,9 +11,25 @@ from pybricks.tools import print
 
 import math
 
+##############################################################################
+# globals and constants
+
+COLOR_NAMES = (
+    "",         # 0 - None
+    "black",    # 1 - Color.BLACK
+    "blue",     # 2 - Color.BLUE
+    "green",    # 3 - Color.GREEN
+    "yellow",   # 4 - Color.YELLOW
+    "red",      # 5 - Color.RED
+    "white",    # 6 - Color.WHITE
+    "brown",    # 7 - Color.BROWN
+    "orange",   # 8 - Color.ORANGE
+    "purple"    # 9 - Color.PURPLE
+)
+
 # my cube has these colors, and no others
 CUBE_COLORS = (
-    # Color.BLACK,
+    # Color.BLACK
     Color.BLUE,
     Color.GREEN,
     Color.YELLOW,
@@ -44,30 +60,17 @@ CUBE_COLORS = (
 # white
 # center color  64.76000000000001 73.70000000000001 75.94999999999999
 
-CUBE_COLORS_RGB = [
-    { 'r':  0, 'g':  0, 'b':  0 }, # None (undefined)
-    { 'r':  0, 'g':  0, 'b':  0 }, # black (undefined)
-    { 'r': 12, 'g': 20, 'b': 35 }, # blue
-    { 'r': 15, 'g': 30, 'b': 10 }, # green
-    { 'r': 70, 'g': 65, 'b': 43 }, # yellow
-    { 'r': 47, 'g': 20, 'b':  9 }, # red
-    { 'r': 65, 'g': 75, 'b': 75 }, # white
-    { 'r':  0, 'g':  0, 'b':  0 }, # brown (undefined)
-    { 'r': 55, 'g': 40, 'b': 12 }, # orange
-    { 'r':  0, 'g':  0, 'b':  0 }  # purple (undefined)
-]
-
-COLOR_NAMES = (
-    "",         # 0 - None
-    "black",    # 1 - Color.BLACK
-    "blue",     # 2 - Color.BLUE
-    "green",    # 3 - Color.GREEN
-    "yellow",   # 4 - Color.YELLOW
-    "red",      # 5 - Color.RED
-    "white",    # 6 - Color.WHITE
-    "brown",    # 7 - Color.BROWN
-    "orange",   # 8 - Color.ORANGE
-    "purple"    # 9 - Color.PURPLE
+CUBE_COLORS_RGB = (
+    None,                           # undefined
+    None,                           # black (undefined)
+    { 'r': 12, 'g': 20, 'b': 34 },  # blue
+    { 'r': 15, 'g': 30, 'b': 10 },  # green
+    { 'r': 70, 'g': 65, 'b': 43 },  # yellow
+    { 'r': 47, 'g': 19, 'b':  9 },  # red
+    { 'r': 65, 'g': 74, 'b': 76 },  # white
+    None,                           # brown (undefined)
+    { 'r': 56, 'g': 39, 'b': 12 },  # orange
+    None                            # purple (undefined)
 )
 
 max_distance = 174 # √3 * 100, the diagonal of a 100x100x100 cube
@@ -78,7 +81,7 @@ def color2str(color) :
     if (color != None and color < len(COLOR_NAMES)) :
         return COLOR_NAMES[color]
     else :
-        return ""
+        return None
 
 ##############################################################################
 # Map a R/G/B dict to a known Color constant
@@ -86,12 +89,10 @@ def rgb2color(rgb) :
     print("mapping R/G/B", rgb['r'], rgb['g'], rgb['b'])
 
     # compute Euclidean distance to all known colors
-    dist = [max_distance] * len(CUBE_COLORS_RGB)
-    for i in range(len(dist)) :
-        cc = CUBE_COLORS_RGB[i]
-        if (cc['r'] > 0) : # ignore undefined colors
-            dist[i] = _distance(rgb, cc)
-            # print("distance to", color2str(i), "=", dist[i])
+    dist = [max_distance] * (1 + max(CUBE_COLORS))
+    for c in (CUBE_COLORS) :
+        dist[c] = _distance(rgb, CUBE_COLORS_RGB[c])
+        # print("distance to", color2str(c), "=", dist[c])
 
     # closest color has the lowest distance
     color = dist.index(min(dist))

@@ -1,5 +1,5 @@
 #
-# The scanning arm reads cube face colors.
+# The scanning arm reads cube facelet colors.
 # It uses a motor on port C, and a color sensor on port 2.
 #
 # by Ren Waldura ren+lego@waldura.org, 2020
