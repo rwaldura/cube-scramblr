@@ -84,11 +84,14 @@ def rotate(angle, correct = False) :
         _rotate(angle)
 
 ##############################################################################
-# Rotate the turntable BY the given angle
+# Rotate the turntable TO/BY the given angle
 # (internal method, hence the underscore in prefix)
-def _rotate(angle, speed = table_speed) :
-    print("rotating turntable by", angle)
-    table_motor.run_angle(speed, angle, Stop.BRAKE)
+def _rotate(angle, speed = table_speed, by_angle = True) :
+    print("rotating turntable", angle)
+    if (by_angle) :
+        table_motor.run_angle(speed, angle, Stop.BRAKE)
+    else :
+        table_motor.run_target(speed, angle, Stop.BRAKE)
 
 ##############################################################################
 # Free lap run: 6.5 turns
@@ -100,3 +103,8 @@ def spin() :
 # cube face
 def next_facelet() :
     _rotate(45, table_speed / 2)
+
+##############################################################################
+# Back to angle zero
+def reset() :
+    _rotate(0, table_speed, False)

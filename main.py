@@ -70,7 +70,7 @@ def rotate_cube(n = 1, correct = False, flip_reset = True) :
 # Wait until any of the buttons are pressed
 def pause() :
     while not any(brick.buttons()):
-        wait(100)
+        wait(200)
 
 ##############################################################################
 def flip_cube(n, reset_arm) :
@@ -114,34 +114,25 @@ def scan_cube_face(face_num) :
     scan_arm.move_center()
     face_color = scan_arm.read_color()
     print("current face", face_num, "has color:", color_utils.color2str(face_color))
-    scan_arm.reset()
-
-    return
 
     facelets = [Color.BLACK] * 8
     cube[face_color] = facelets
 
     # read each facelet in turn
     for facelet in range(8) :
+        if (facelet > 0) :
+            turntable.next_facelet()
+
         if (facelet % 2 == 0) :
             scan_arm.move_edge()
         else :
             scan_arm.move_corner()
 
-        facelet_color = scan_arm.read_color()
+        facelets[facelet] = scan_arm.read_color()
+        print("facelet", facelet, "color", color_utils.color2str(facelets[facelet]))
 
-        if (facelet_color == None) :
-            print("ERROR - unable to read color of facelet", facelet)
-            # this is a critical error, how to handle it? 
-        else :
-            print("facelet", facelet, "color", color_utils.color2str(facelet_color))
-        
-        facelets[facelet] = facelet_color
-        turntable.next_facelet()
-
-    turntable.next_facelet()
+    turntable.reset() # eliminate any drift accumulated during facelet scanning 
     scan_arm.reset()
-
 
 ##############################################################################
 # Calibrate the color sensor; only used during development

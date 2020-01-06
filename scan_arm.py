@@ -21,8 +21,8 @@ scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
 scan_speed = 100
 scan_center_angle = 250 # positions the head on top of center facelet
 scan_min_angle = 150
-scan_edge_angle = scan_center_angle - 40
-scan_corner_angle = scan_center_angle - 90
+scan_edge_angle = scan_center_angle - 50
+scan_corner_angle = scan_center_angle - 70
 
 # color sensor #2, to scan the cube
 scan_sensor = ColorSensor(Port.S2)
@@ -71,7 +71,7 @@ def move_center() :
     _move(scan_center_angle)
 
 ##############################################################################
-# Sample color 5 times, pick the average
+# Sample color multiple times, and pick the average
 # Returns a R,G,B dict
 def _read_rgb_avg() :
     num_samples = 10
@@ -83,8 +83,8 @@ def _read_rgb_avg() :
     }
 
     for i in range(num_samples) :
-        color_sample = scan_sensor.color()
-        print("read #", i, "color=", color_utils.color2str(color_sample))
+        # color_sample = scan_sensor.color()
+        # print("read #", i, "color=", color_utils.color2str(color_sample))
         
         (r,g,b) = scan_sensor.rgb()
         rgb_samples['r'][i] = r

@@ -91,7 +91,7 @@ def rgb2color(rgb) :
         cc = CUBE_COLORS_RGB[i]
         if (cc['r'] > 0) : # ignore undefined colors
             dist[i] = _distance(rgb, cc)
-            print("distance to", color2str(i), "=", dist[i])
+            # print("distance to", color2str(i), "=", dist[i])
 
     # closest color has the lowest distance
     color = dist.index(min(dist))
