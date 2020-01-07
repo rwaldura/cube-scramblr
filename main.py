@@ -147,7 +147,7 @@ def print_facelets(face_num, face_color, facelet, facelets) :
             "facelet", facelet, "color", cu.color2str(facelets[facelet])) 
     facelets_str = ""
     for f in (facelets) :
-        facelets_str += cu.color2str(facelets[f]) + " "
+        facelets_str += cu.color2str(f) + " "
     print("all facelets", facelets_str)
 
 ##############################################################################
