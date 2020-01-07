@@ -18,5 +18,5 @@ resolve the cube.
 - [ ] scan a cube face (_in progress_)
 - [x] scan the entire cube
 - [ ] verify a valid cube was scanned
-- [ ] integrate [/muodov/kociemba]() for solving
+- [ ] integrate http://github.com/muodov/kociemba for solving
 - [ ] solve the cube
