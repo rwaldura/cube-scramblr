@@ -148,7 +148,7 @@ def print_facelets(face_num, face_color, facelet, facelets) :
     facelets_str = ""
     for f in (facelets) :
         facelets_str += cu.color2str(f) + " "
-    print("all facelets", facelets_str)
+    print("all facelets:", facelets_str)
 
 ##############################################################################
 # Calibrate the color sensor; only used during development
