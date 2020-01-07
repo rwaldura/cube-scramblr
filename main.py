@@ -102,13 +102,13 @@ def scan_cube(debug = False) :
 
     rotate_cube()
     flip_cube(1, True)
-    scan_cube_face(5)
+    scan_cube_face(4)
 
     if (debug) :
         pause()
 
     flip_cube(2, True)
-    scan_cube_face(6)
+    scan_cube_face(5)
 
 ##############################################################################
 # Scan an entire face of the cube, starting with the center facelet.
@@ -122,7 +122,7 @@ def scan_cube_face(face_num) :
     face_color = scan_arm.read_color()
     print("current face", face_num, "has color:", cu.color2str(face_color))
 
-    facelets = [Color.BLACK] * 8
+    facelets = [0] * 8
     cube[face_color] = facelets
 
     # read each facelet in turn
@@ -136,10 +136,19 @@ def scan_cube_face(face_num) :
             scan_arm.move_corner()
 
         facelets[facelet] = scan_arm.read_color()
-        print("facelet", facelet, "color", cu.color2str(facelets[facelet]))
+        print_facelets(face_num, face_color, facelet, facelets)
+        pause()
 
-    turntable.reset() # eliminate any drift accumulated during facelet scanning 
+    turntable.next_facelet()
     scan_arm.reset()
+
+def print_facelets(face_num, face_color, facelet, facelets) :
+    print("face", face_num, cu.color2str(face_color), 
+            "facelet", facelet, "color", cu.color2str(facelets[facelet])) 
+    facelets_str = ""
+    for f in (facelets) :
+        facelets_str += cu.color2str(facelets[f]) + " "
+    print("all facelets", facelets_str)
 
 ##############################################################################
 # Calibrate the color sensor; only used during development
