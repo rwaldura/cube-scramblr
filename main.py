@@ -73,7 +73,7 @@ def rotate_cube(n = 1, correct = False, flip_reset = True) :
     turntable.rotate(90 * n, correct)
 
 ##############################################################################
-def flip_cube(n, reset_arm) :
+def flip_cube(n, reset_arm = True) :
     flip_arm.flip_cube(n, reset_arm)
 
 ##############################################################################
@@ -169,6 +169,7 @@ display("insert cube")
 pause()
 
 # scramble_cube()
-# scan_cube(True)
-
-calibrate_color_sensor()
+scan_cube(False)
+# flip_cube(5)
+        
+# calibrate_color_sensor()

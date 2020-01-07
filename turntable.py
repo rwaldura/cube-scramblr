@@ -29,14 +29,14 @@ table_sensor = ColorSensor(Port.S1)
 def init() :
     print("initializing turntable...")
 
-    # go through a full rotation, seeking to maximize the reflection 
+    # go through a quarter turn, seeking to maximize the reflection 
     # returned by the sensor
     table_motor.run(table_speed / 2)
 
     # record the reflection for each angle
-    reflect = [0] * 400
+    reflect = [0] * 100
 
-    while (table_motor.angle() < 360) :
+    while (table_motor.angle() < 90) :
         wait(100) # sample 10 times per second
         r = table_sensor.reflection()
         a = table_motor.angle()

@@ -17,7 +17,7 @@ from pybricks.tools import print, wait, StopWatch
 # "A" motor flips arm
 flip_motor = Motor(Port.A)
 flip_max_angle = 200
-flip_hold_angle = 120
+flip_hold_angle = 115
 flip_min_angle = 0
 flip_speed = 300
 

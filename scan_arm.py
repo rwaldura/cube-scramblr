@@ -18,7 +18,7 @@ import color_utils
 
 # "C" motor moves the scanning arm
 scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
-scan_speed = 100
+scan_speed = 200
 scan_center_angle = 250 # positions the head on top of center facelet
 scan_min_angle = 150
 scan_edge_angle = scan_center_angle - 40
