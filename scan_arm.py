@@ -21,7 +21,7 @@ scan_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, [12, 36])
 scan_speed = 100
 scan_center_angle = 250 # positions the head on top of center facelet
 scan_min_angle = 150
-scan_edge_angle = scan_center_angle - 50
+scan_edge_angle = scan_center_angle - 40
 scan_corner_angle = scan_center_angle - 70
 
 # color sensor #2, to scan the cube

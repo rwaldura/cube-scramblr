@@ -15,7 +15,7 @@ from pybricks.tools import print, wait, StopWatch
 import random, time
 
 import turntable, flip_arm, scan_arm
-from color_utils import color2str
+import color_utils as cu
 
 ##############################################################################
 # globals and constants
@@ -24,7 +24,7 @@ from color_utils import color2str
 scrambling_moves = 10
 
 # cube faces, indexed by color of the central facelet
-cube = [None] * (1 + max(color_utils.CUBE_COLORS))
+cube = [None] * (1 + max(cu.CUBE_COLORS))
 
 ##############################################################################
 def display(mesg) :
@@ -120,7 +120,7 @@ def scan_cube_face(face_num) :
     # bring arm to center, and read the color of the center facelet
     scan_arm.move_center()
     face_color = scan_arm.read_color()
-    print("current face", face_num, "has color:", color2str(face_color))
+    print("current face", face_num, "has color:", cu.color2str(face_color))
 
     facelets = [Color.BLACK] * 8
     cube[face_color] = facelets
@@ -136,7 +136,7 @@ def scan_cube_face(face_num) :
             scan_arm.move_corner()
 
         facelets[facelet] = scan_arm.read_color()
-        print("facelet", facelet, "color", color2str(facelets[facelet]))
+        print("facelet", facelet, "color", cu.color2str(facelets[facelet]))
 
     turntable.reset() # eliminate any drift accumulated during facelet scanning 
     scan_arm.reset()
@@ -145,17 +145,17 @@ def scan_cube_face(face_num) :
 # Calibrate the color sensor; only used during development
 def calibrate_color_sensor() :
     while (True) :
-        scan_arm.move_edge()
-        rgb = scan_arm._read_rgb_avg()
-        print("edge color", rgb['r'], rgb['g'], rgb['b'])
-        color = scan_arm.read_color()
-        print("edge color mapped to", color2str(color))
-
         scan_arm.move_center()
         rgb = scan_arm._read_rgb_avg()
         print("center color", rgb['r'], rgb['g'], rgb['b'])
         color = scan_arm.read_color()
-        print("center color mapped to", color2str(color))
+        print("center color mapped to", cu.color2str(color))
+
+        scan_arm.move_edge()
+        rgb = scan_arm._read_rgb_avg()
+        print("edge color", rgb['r'], rgb['g'], rgb['b'])
+        color = scan_arm.read_color()
+        print("edge color mapped to", cu.color2str(color))
 
         scan_arm.reset()
         pause()
@@ -169,6 +169,6 @@ display("insert cube")
 pause()
 
 # scramble_cube()
-scan_cube(True)
+# scan_cube(True)
 
-# calibrate_color_sensor()
+calibrate_color_sensor()
