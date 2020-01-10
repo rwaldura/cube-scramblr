@@ -10,8 +10,6 @@
 from pybricks.parameters import Color
 from pybricks.tools import print
 
-import math
-
 ##############################################################################
 # globals and constants
 
@@ -74,7 +72,7 @@ CUBE_COLORS_RGB = (
     None                            # purple (undefined)
 )
 
-max_distance = 174 # √3 * 100, the diagonal of a 100x100x100 cube
+max_distance = 30000 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cube
 
 ##############################################################################
 # Return the name of a given Color
@@ -103,9 +101,10 @@ def rgb2color(rgb) :
 def sqr(x) :
     return x * x
 
+# optimization: since all we do is compare distances (the actual value
+# is not relevant), no need to compute the square root
 def _distance(x, y) :
-    return math.sqrt(
-          sqr(x['r'] - y['r']) 
+    return sqr(x['r'] - y['r']) 
         + sqr(x['g'] - y['g'])
         + sqr(x['b'] - y['b'])
     )
