@@ -95,8 +95,13 @@ def _rotate(angle, speed = table_speed, by_angle = True) :
 
 ##############################################################################
 # Free lap run: 6.5 turns
-def spin() :
+def free_spin() :
     _rotate(6 * 90 + 45, table_speed * 2)
+
+##############################################################################
+# Start a spin (a full turn)
+def spin() :
+    table_motor.run_angle(speed / 2, 360, Stop.BRAKE, False)
 
 ##############################################################################
 # Move to the next facelet; used while scanning each of the 9 facelets on a 
@@ -108,3 +113,5 @@ def next_facelet() :
 # Back to angle zero
 def reset() :
     _rotate(0, table_speed, False)
+
+def start_face_scan() :

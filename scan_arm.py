@@ -74,7 +74,7 @@ def move_center() :
 ##############################################################################
 # Sample color multiple times, and pick the average
 # Returns a R,G,B dict
-def _read_rgb_avg(num_samples = default_num_samples) :
+def read_rgb_avg(num_samples = default_num_samples) :
 
     rgb_samples = { 
         'r' : [0] * num_samples,
@@ -106,7 +106,7 @@ def read_color() :
     attempts = 0
 
     while (True) :
-        color = color_utils.rgb2color(_read_rgb_avg())
+        color = color_utils.rgb2color(read_rgb_avg())
         attempts += 1
 
         if (color_utils.is_cube_color(color)) :
