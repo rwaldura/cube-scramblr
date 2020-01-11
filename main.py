@@ -95,7 +95,7 @@ def scramble_cube() :
 # Visit all 6 faces of the cube, scanning each one.
 def scan_cube(debug = False) :
     for face in range(6) :
-        if (face == 3) :
+        if (face == 4) :
             rotate_cube() # quarter turn
 
         if (face == 5) :
