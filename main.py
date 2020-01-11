@@ -117,7 +117,8 @@ def scan_cube_face(face_num) :
     face_color = scan_cube_face_center(face_num)
     print("current face", face_num, "has color:", cu.color2str(face_color))
 
-    cube[face_color] = scan_cube_face_edges(face_num)
+    # read a bunch of color samples for this face
+    #cube[face_color] = scan_cube_face_edges(face_num)
 
     scan_arm.reset()
 

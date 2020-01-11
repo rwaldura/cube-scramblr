@@ -115,3 +115,4 @@ def reset() :
     _rotate(0, table_speed, False)
 
 def start_face_scan() :
+    x = 0

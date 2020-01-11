@@ -105,9 +105,8 @@ def sqr(x) :
 # is not relevant), no need to compute the square root
 def _distance(x, y) :
     return sqr(x['r'] - y['r']) 
-        + sqr(x['g'] - y['g'])
-        + sqr(x['b'] - y['b'])
-    )
+    + sqr(x['g'] - y['g'])
+    + sqr(x['b'] - y['b'])
 
 ##############################################################################
 # Allowed colors for the cube
