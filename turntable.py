@@ -50,7 +50,7 @@ def init() :
     print("found highest reflection", reflect[max_angle], "at angle", max_angle)
 
     # correct to get a straight angle on the table
-    angle_reflection_epsilon = 7
+    angle_reflection_epsilon = 5
 
     _rotate(max_angle + angle_reflection_epsilon)
     table_motor.reset_angle(0)

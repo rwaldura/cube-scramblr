@@ -9,7 +9,7 @@
 #
 
 from pybricks import ev3brick as brick 
-from pybricks.parameters import (Port, Stop, Direction, Color)
+from pybricks.parameters import (Port, Stop, Direction, Color, Button)
 from pybricks.tools import print, wait, StopWatch
 
 import random, time
@@ -97,7 +97,6 @@ def scan_cube(debug = False) :
     for face in range(6) :
         if (face == 4) :
             rotate_cube() # quarter turn
-
         if (face == 5) :
             flip_cube(2)
         elif (face > 0) :
@@ -186,11 +185,27 @@ def calibrate_color_sensor() :
 
 init_all()
 
-display("insert cube")
-pause()
+display("Insert cube")
+display("Press UP button to")
+display("scramble, DOWN button")
+display("to resolve")
+brick.sound.beep()
 
-# scramble_cube()
-scan_cube(False)
-# flip_cube(5)
-        
-# calibrate_color_sensor()
+do_scramble = False
+do_resolve = False
+
+while not any(brick.buttons()):
+    wait(100)
+    if (Button.UP in brick.buttons()) :
+        do_scramble = True
+        break
+    elif (Button.DOWN in brick.buttons()) :
+        do_resolve = True
+        break
+
+if (do_scramble) :
+    scramble_cube()
+elif (do_resolve) :
+    scan_cube(True)
+else :        
+    calibrate_color_sensor()
