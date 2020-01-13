@@ -121,8 +121,8 @@ def scan_cube_face(face_num) :
     cube[face_color] = scan_cube_face_edges(face_num)
 
     # re-align the table, due to accumulated errors
-    turntable.reset(False)
     scan_arm.reset()
+    turntable.reset(False)
 
     return face_color
 
@@ -153,14 +153,13 @@ def scan_cube_face_edges(face_num) :
 
         # read color underneath sensor
         rgb = scan_arm.read_rgb_avg()
-        color = cu.rgb2color(rgb)
-        spin_colors[i] = color
+        spin_colors[i] = rgb
 
-        print("face", face_num, "facelet", i, "is", cu.color2str(color))
+        print("face", face_num, "facelet", i, "is", cu.rgb2color(cu.color2str(rgb)))
 
         if (i < 8) :
             turntable.rotate(45)
-            pause()
+            # pause()
 
     return spin_colors
 
@@ -169,7 +168,7 @@ def print_facelets(cube, face_num, face_color) :
     facelets_str = ""
     if (cube[face_color] != None) :
         for f in (cube[face_color]) :
-            facelets_str += cu.color2str(f) + " "
+            facelets_str += cu.color2str(cu.rgb2color(f)) + " "
     print("face", face_num, cu.color2str(face_color), "all facelets:", facelets_str)
 
 ##############################################################################
@@ -217,6 +216,6 @@ while not any(brick.buttons()):
 if (do_scramble) :
     scramble_cube()
 elif (do_resolve) :
-    scan_cube(True)
+    scan_cube(False)
 else :        
     calibrate_color_sensor()
