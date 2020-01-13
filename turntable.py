@@ -71,7 +71,7 @@ def rotate(angle, correct = False) :
         else :
             angle -= table_epsilon
 
-    print("corrected angle:", angle)
+    # print("corrected angle:", angle)
     
     _rotate(angle)
 
@@ -99,9 +99,11 @@ def free_spin() :
     _rotate(6 * 90 + 45, table_speed * 2)
 
 ##############################################################################
-# Start a spin (a full turn)
+# Start a spin (a full turn), 
+# and don't wait to finish
 def spin() :
-    table_motor.run_angle(speed / 2, 360, Stop.BRAKE, False)
+    table_motor.run_angle(table_speed / 2, 360, Stop.BRAKE, False)
+    wait(100) # give the motor time to actually start spinning
 
 ##############################################################################
 # Move to the next facelet; used while scanning each of the 9 facelets on a 

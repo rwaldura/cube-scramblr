@@ -102,7 +102,8 @@ def scan_cube(debug = False) :
         elif (face > 0) :
             flip_cube()
 
-        scan_cube_face(face)
+        face_color = scan_cube_face(face)
+        print_facelets(cube, face, face_color)
 
         if (debug) :
             pause()
@@ -117,7 +118,7 @@ def scan_cube_face(face_num) :
     print("current face", face_num, "has color:", cu.color2str(face_color))
 
     # read a bunch of color samples for this face
-    #cube[face_color] = scan_cube_face_edges(face_num)
+    cube[face_color] = scan_cube_face_edges(face_num)
 
     scan_arm.reset()
 
@@ -137,29 +138,37 @@ def scan_cube_face_center(face_num) :
 # This will require some solid post-processing to isolate distinct 
 # facelet colors. 
 def scan_cube_face_edges(face_num) :
+    spin_colors = [Color.BLACK] * 8
+
     scan_arm.move_edge()
 
-    # start rotating the cube
-    turntable.spin()
-    spin_colors = [None] * 100
+    # rotate cube
+    for i in range(8) :
+        # if (i % 2 == 0) :
+            # scan_arm.move_edge()
+        # else :
+            # scan_arm.move_corner()
 
-    # while cube is rotating
-    while (turntable.speed() > 0) :
-        wait(100) # give it time to move
         # read color underneath sensor
-        rgb = scan_arm.read_rgb_avg(1)
-        spin_colors.append(rgb)
+        rgb = scan_arm.read_rgb_avg()
+        color = cu.rgb2color(rgb)
+        spin_colors[i] = color
 
-    print("read", len(spin_colors), "edge color samples during full spin")
+        print("face", face_num, "facelet", i, "is", cu.color2str(color))
+
+        if (i < 7) :
+            turntable.rotate(45)
+            pause()
+
     return spin_colors
 
-def print_facelets(face_num, face_color, facelet, facelets) :
-    print("face", face_num, cu.color2str(face_color), 
-            "facelet", facelet, "color", cu.color2str(facelets[facelet])) 
+##############################################################################
+def print_facelets(cube, face_num, face_color) :
     facelets_str = ""
-    for f in (facelets) :
-        facelets_str += cu.color2str(f) + " "
-    print("all facelets:", facelets_str)
+    if (cube[face_color] != None) :
+        for f in (cube[face_color]) :
+            facelets_str += cu.color2str(f) + " "
+    print("face", face_num, cu.color2str(face_color), "all facelets:", facelets_str)
 
 ##############################################################################
 # Calibrate the color sensor; only used during development
