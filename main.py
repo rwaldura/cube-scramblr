@@ -14,7 +14,7 @@ from pybricks.tools import print, wait, StopWatch
 
 import random, time
 
-import turntable, flip_arm, scan_arm
+import turntable, flip_arm, scan_arm, color_scanner
 import color_utils as cu
 
 ##############################################################################
@@ -23,8 +23,8 @@ import color_utils as cu
 # total number of scrambling moves: flips and rotations
 scrambling_moves = 10
 
-# cube faces, indexed by color of the central facelet
-cube = [None] * (1 + max(cu.CUBE_COLORS))
+# cube face colors, indexed by scanning order
+cube = [None] * 6
 
 ##############################################################################
 def display(mesg) :
@@ -93,6 +93,7 @@ def scramble_cube() :
 
 ##############################################################################
 # Visit all 6 faces of the cube, scanning each one.
+# Populate the cube[] array.
 def scan_cube(debug = False) :
     for face in range(6) :
         if (face == 4) :
@@ -102,87 +103,23 @@ def scan_cube(debug = False) :
         elif (face > 0) :
             flip_cube()
 
-        face_color = scan_cube_face(face)
-        print_facelets(cube, face, face_color)
+        cube[face] = color_scanner.scan_cube_face(face)
 
         if (debug) :
             pause()
-
-##############################################################################
-# Scan an entire face of the cube, starting with the center facelet.
-# We also populate the cube[] array with the facelet colors.
-def scan_cube_face(face_num) :
-    print("scanning face", face_num, "...")
-
-    face_color = scan_cube_face_center(face_num)
-    print("current face", face_num, "has color:", cu.color2str(face_color))
-
-    # read a bunch of color samples for this face
-    cube[face_color] = scan_cube_face_edges(face_num)
-
-    # re-align the table, due to accumulated errors
-    scan_arm.reset()
-    turntable.reset(False)
-
-    return face_color
-
-##############################################################################
-# Scan the center facelet, return its color.
-# Bring arm to center, and read the color of the center facelet
-def scan_cube_face_center(face_num) :
-    scan_arm.move_center()
-    return scan_arm.read_color()
-
-##############################################################################
-# Read each facelet: rotate the table by a entire turn, reading all
-# colors under the scanning head (color sensor) as we go.
-#
-# This will require some solid post-processing to isolate distinct 
-# facelet colors. 
-def scan_cube_face_edges(face_num) :
-    spin_colors = [Color.BLACK] * 9
-
-    scan_arm.move_edge()
-
-    # rotate cube
-    for i in range(9) :
-        # if (i % 2 == 0) :
-            # scan_arm.move_edge()
-        # else :
-            # scan_arm.move_corner()
-
-        # read color underneath sensor
-        rgb = scan_arm.read_rgb_avg()
-        spin_colors[i] = rgb
-
-        print("face", face_num, "facelet", i, "is", cu.rgb2color(cu.color2str(rgb)))
-
-        if (i < 8) :
-            turntable.rotate(45)
-            # pause()
-
-    return spin_colors
-
-##############################################################################
-def print_facelets(cube, face_num, face_color) :
-    facelets_str = ""
-    if (cube[face_color] != None) :
-        for f in (cube[face_color]) :
-            facelets_str += cu.color2str(cu.rgb2color(f)) + " "
-    print("face", face_num, cu.color2str(face_color), "all facelets:", facelets_str)
 
 ##############################################################################
 # Calibrate the color sensor; only used during development
 def calibrate_color_sensor() :
     while (True) :
         scan_arm.move_center()
-        rgb = scan_arm.read_rgb_avg()
+        rgb = scan_arm.read_rgb()
         print("center color", rgb['r'], rgb['g'], rgb['b'])
         color = scan_arm.read_color()
         print("center color mapped to", cu.color2str(color))
 
         scan_arm.move_edge()
-        rgb = scan_arm.read_rgb_avg()
+        rgb = scan_arm.read_rgb()
         print("edge color", rgb['r'], rgb['g'], rgb['b'])
         color = scan_arm.read_color()
         print("edge color mapped to", cu.color2str(color))

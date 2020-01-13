@@ -72,9 +72,13 @@ def move_center() :
     _move(scan_center_angle)
 
 ##############################################################################
+def read_rgb() :
+    return read_rgb_avg(default_num_samples)
+
+##############################################################################
 # Sample color multiple times, and pick the average
 # Returns a R,G,B dict
-def read_rgb_avg(num_samples = default_num_samples) :
+def read_rgb_avg(num_samples) :
 
     rgb_samples = { 
         'r' : [0] * num_samples,

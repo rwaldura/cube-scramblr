@@ -76,6 +76,11 @@ max_distance = 30000 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cub
 
 ##############################################################################
 # Return the name of a given Color
+def rgb2str(rgb) :
+    return color2str(rgb2color(rgb))
+    
+##############################################################################
+# Return the name of a given Color
 def color2str(color) :
     if (color != None and color < len(COLOR_NAMES)) :
         return COLOR_NAMES[color]
