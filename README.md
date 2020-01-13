@@ -14,8 +14,8 @@ resolve the cube.
 
 - [x] rotate, and flip the cube
 - [x] twist a layer
-- [x] scan a cube face (_in progress_)
 - [x] scan the entire cube
+- [x] scan a cube face (_in progress_)
 - [ ] reliably read facelet colors
 - [ ] verify a valid cube was scanned
 - [ ] integrate http://github.com/muodov/kociemba for solving
@@ -33,9 +33,9 @@ White is the color farthest from (0,0,0), and can be used to anchor one cluster.
 Cube color logic helps color detection:
 * 6 colors total: Red Blue Green White Yellow Orange
 * There are 9 facelets of each color
+* Each center facelet is of a distinct color
     * White is opposite Yellow
     * Orange is opposite Red
     * Green is opposite Blue
-* Each center facelet is of a distinct color
-* 8 corner pieces are: R/W/G, 
-* 12 edge pieces are: 
+* The 8 corner pieces are: R-W-G, etc.
+* 12 edge pieces are: ...

@@ -45,12 +45,12 @@ def scan_cube_face_center(face_num) :
 # This will require some solid post-processing to isolate distinct 
 # facelet colors. 
 def scan_cube_face_edges(face_num) :
-    face_colors = [()] * 9
+    face_colors = [()] * 8
 
     scan_arm.move_edge()
 
     # rotate cube
-    for i in range(9) :
+    for i in range(8) :
         # if (i % 2 == 0) :
             # scan_arm.move_edge()
         # else :
@@ -62,7 +62,7 @@ def scan_cube_face_edges(face_num) :
 
         # print("face", face_num, "facelet", i, "may be", cu.rgb2str(rgb))
 
-        if (i < 8) :
+        if (i < 7) :
             turntable.next_facelet()
             # pause()
 

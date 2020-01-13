@@ -39,6 +39,55 @@ CUBE_COLORS = (
     # Color.PURPLE
 )
 
+# note color order does not matter
+CUBE_CORNERS = (
+    # from white face
+    (Color.WHITE, Color.GREEN, Color.RED),
+    (Color.WHITE, Color.GREEN, Color.ORANGE),
+    (Color.RED, Color.WHITE, Color.BLUE),
+    (Color.ORANGE, Color.WHITE, Color.BLUE),
+    # from yellow face
+    (Color.ORANGE, Color.GREEN, Color.YELLOW),
+    (Color.YELLOW, Color.GREEN, Color.RED),
+    (Color.RED, Color.YELLOW, Color.BLUE),
+    (Color.BLUE, Color.YELLOW, Color.ORANGE)
+)
+
+# there are some duplicates in this list, since the order does not matter
+# edge (green, orange) == edge (orange, green)
+CUBE_EDGES = (
+    # green face: no blue
+    (Color.GREEN, Color.ORANGE),
+    (Color.GREEN, Color.YELLOW),
+    (Color.GREEN, Color.RED),
+    (Color.GREEN, Color.WHITE),
+    # red face: no orange
+    (Color.RED, Color.WHITE),
+    (Color.RED, Color.BLUE),
+    (Color.RED, Color.YELLOW),
+    (Color.RED, Color.GREEN), 
+    # white face: no yellow
+    (Color.WHITE, Color.GREEN), 
+    (Color.WHITE, Color.RED), 
+    (Color.WHITE, Color.BLUE),
+    (Color.WHITE, Color.ORANGE),
+    # orange face: no red
+    (Color.ORANGE, Color.WHITE), 
+    (Color.ORANGE, Color.BLUE),
+    (Color.ORANGE, Color.GREEN),
+    (Color.ORANGE, Color.YELLOW),
+    # blue face: no green
+    (Color.BLUE, Color.RED), 
+    (Color.BLUE, Color.WHITE),
+    (Color.BLUE, Color.ORANGE),
+    (Color.BLUE, Color.YELLOW),
+    # yellow face: no white
+    (Color.YELLOW, Color.BLUE), 
+    (Color.YELLOW, Color.GREEN),
+    (Color.YELLOW, Color.ORANGE),
+    (Color.YELLOW, Color.RED),
+)
+
 # values in 100-based RGB space, based on experimentation
 
 # yellow

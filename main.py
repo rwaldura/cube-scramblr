@@ -109,6 +109,13 @@ def scan_cube(debug = False) :
             pause()
 
 ##############################################################################
+# We've scanned the entire cube, and read RGB samples for each facelet.
+# Now map each facelet to an actual color constant. 
+def map_cube_colors() :
+    # cube[] is a 6-array of 9-arrays
+    x = 0
+
+##############################################################################
 # Calibrate the color sensor; only used during development
 def calibrate_color_sensor() :
     while (True) :
@@ -154,5 +161,6 @@ if (do_scramble) :
     scramble_cube()
 elif (do_resolve) :
     scan_cube(False)
+    map_cube_colors()
 else :        
     calibrate_color_sensor()
