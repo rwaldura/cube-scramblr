@@ -90,7 +90,7 @@ def _rotate(angle, speed = table_speed, by_angle = True) :
     print("rotating turntable", angle)
     if (by_angle) :
         table_motor.run_angle(speed, angle, Stop.BRAKE)
-    else :
+    else : # to_angle
         table_motor.run_target(speed, angle, Stop.BRAKE)
 
 ##############################################################################
@@ -112,12 +112,9 @@ def next_facelet() :
     _rotate(45, table_speed / 2)
 
 ##############################################################################
-# Back to angle zero
-def reset(to_zero = True) :
-    if (to_zero) :
-        _rotate(0, table_speed, False)
-    else :
-        _rotate(360, table_speed, False)
+# Back to logical angle zero (i.e. 0, or 360, or 720, or...)
+def reset() :
+    print("table is at", table_motor.angle())
+    n = round(table_motor.angle() / 360)
+    _rotate(360 * n, table_speed, False)
 
-def start_face_scan() :
-    x = 0

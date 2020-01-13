@@ -1,7 +1,5 @@
-#!/usr/bin/env pybricks-micropython
 #
-# The structure, the build, is based off David Gilday's MindCub3r
-# at https://www.mindcuber.com/mindcub3r/mindcub3r.html
+# Color scanning logic.
 #
 # by Ren Waldura ren+lego@waldura.org, 2020
 #
@@ -26,11 +24,10 @@ def scan_cube_face(face_num) :
 
     facelet_colors = scan_cube_face_edges(face_num)
     facelets = [face_color] + facelet_colors
-    print("face", face_num, "colors:", print_facelets(facelets))
+    # print("face", face_num, "colors:", print_facelets(facelets))
 
-    # re-align the table, due to accumulated errors
     scan_arm.reset()
-    turntable.reset(False)
+    turntable.reset()   # re-align the table, due to accumulated errors
 
     return facelets
 
@@ -63,10 +60,10 @@ def scan_cube_face_edges(face_num) :
         rgb = scan_arm.read_rgb()
         face_colors[i] = rgb
 
-        print("face", face_num, "facelet", i, "may be", cu.rgb2str(rgb))
+        # print("face", face_num, "facelet", i, "may be", cu.rgb2str(rgb))
 
         if (i < 8) :
-            turntable.rotate(45)
+            turntable.next_facelet()
             # pause()
 
     return face_colors
