@@ -78,7 +78,7 @@ max_distance = 30000 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cub
 # Return the name of a given Color
 def rgb2str(rgb) :
     return color2str(rgb2color(rgb))
-    
+
 ##############################################################################
 # Return the name of a given Color
 def color2str(color) :
@@ -95,7 +95,7 @@ def rgb2color(rgb) :
     # compute Euclidean distance to all known colors
     dist = [max_distance] * (1 + max(CUBE_COLORS))
     for c in (CUBE_COLORS) :
-        dist[c] = _distance(rgb, CUBE_COLORS_RGB[c])
+        dist[c] = _distance2(rgb, CUBE_COLORS_RGB[c])
         # print("distance to", color2str(c), "=", dist[c])
 
     # closest color has the lowest distance
@@ -106,9 +106,12 @@ def rgb2color(rgb) :
 def sqr(x) :
     return x * x
 
-# optimization: since all we do is compare distances (the actual value
-# is not relevant), no need to compute the square root
-def _distance(x, y) :
+##############################################################################
+# Compute Euclidean distance (squared) between 2 points in RGB space. 
+# Optimization: since all we do is compare distances (the actual value
+# is not relevant), only return the squared distance -- no need to compute
+# the square root
+def _distance2(x, y) :
     return sqr(x['r'] - y['r']) 
     + sqr(x['g'] - y['g'])
     + sqr(x['b'] - y['b'])

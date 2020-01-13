@@ -6,8 +6,7 @@ Written in [MicroPython, running on ev3dev](https://education.lego.com/en-us/sup
 
 If the links above have become stale, and essential files cannot be located (structure build file, 
 MicroPython manual, and SD card image for EV3), you may contact me for backup copies.
-
-<!-- https://drive.google.com/drive/u/0/folders/1jUdjHS22F1zwnxoQA3R3IfTaT3J7NjvH -->
+<!-- copies at https://drive.google.com/drive/u/0/folders/1jUdjHS22F1zwnxoQA3R3IfTaT3J7NjvH -->
 
 ## Current Status
 As of January 2020, this program can scramble the cube, and read its scrambled state; it cannot yet
@@ -15,8 +14,28 @@ resolve the cube.
 
 - [x] rotate, and flip the cube
 - [x] twist a layer
-- [ ] scan a cube face (_in progress_)
+- [x] scan a cube face (_in progress_)
 - [x] scan the entire cube
+- [ ] reliably read facelet colors
 - [ ] verify a valid cube was scanned
 - [ ] integrate http://github.com/muodov/kociemba for solving
 - [ ] solve the cube
+
+## Cube Scanning and Color Detection
+
+The stock `ColorSensor` can return a `Color` constant, but it does not work well with my cube.
+(It may be optimized for Lego brick colors.) Reading RGB instead, returns raw colors
+that then need to be categorized.
+
+Idea: collect RGB samples, and run a clustering algorithm to group them into groups, by color. 
+White is the color farthest from (0,0,0), and can be used to anchor one cluster. 
+
+Cube color logic helps color detection:
+* 6 colors total: Red Blue Green White Yellow Orange
+* There are 9 facelets of each color
+    * White is opposite Yellow
+    * Orange is opposite Red
+    * Green is opposite Blue
+* Each center facelet is of a distinct color
+* 8 corner pieces are: R/W/G, 
+* 12 edge pieces are: 
