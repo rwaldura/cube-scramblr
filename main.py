@@ -120,6 +120,8 @@ def scan_cube_face(face_num) :
     # read a bunch of color samples for this face
     cube[face_color] = scan_cube_face_edges(face_num)
 
+    # re-align the table, due to accumulated errors
+    turntable.reset(False)
     scan_arm.reset()
 
     return face_color
@@ -138,12 +140,12 @@ def scan_cube_face_center(face_num) :
 # This will require some solid post-processing to isolate distinct 
 # facelet colors. 
 def scan_cube_face_edges(face_num) :
-    spin_colors = [Color.BLACK] * 8
+    spin_colors = [Color.BLACK] * 9
 
     scan_arm.move_edge()
 
     # rotate cube
-    for i in range(8) :
+    for i in range(9) :
         # if (i % 2 == 0) :
             # scan_arm.move_edge()
         # else :
@@ -156,7 +158,7 @@ def scan_cube_face_edges(face_num) :
 
         print("face", face_num, "facelet", i, "is", cu.color2str(color))
 
-        if (i < 7) :
+        if (i < 8) :
             turntable.rotate(45)
             pause()
 

@@ -113,8 +113,11 @@ def next_facelet() :
 
 ##############################################################################
 # Back to angle zero
-def reset() :
-    _rotate(0, table_speed, False)
+def reset(to_zero = True) :
+    if (to_zero) :
+        _rotate(0, table_speed, False)
+    else :
+        _rotate(360, table_speed, False)
 
 def start_face_scan() :
     x = 0
