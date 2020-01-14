@@ -112,10 +112,11 @@ def corner_colors(color1, color2 = None) :
             lambda corner: color2 in corner,
             corners)
 
-    return list(
+    return set(
         filter(
             lambda color: not (color == color1 or color == color2),
             uniq(corners)))
 
+##############################################################################
 def uniq(l) :
     return { item for sublist in l for item in sublist }
