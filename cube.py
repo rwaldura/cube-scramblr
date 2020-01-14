@@ -103,10 +103,19 @@ def is_valid(color) :
 # Return the possible colors for a corner piece, given 1 or 2 colors
 def corner_colors(color1, color2 = None) :
     corners = filter(
-        lambda c: color1 in c or color2 in c, 
+        lambda corner: color1 in corner, 
         CUBE_CORNERS)
 
-    return uniq(corners)
+    if (color2 != None) :
+        assert color1 != color2
+        corners = filter(
+            lambda corner: color2 in corner,
+            corners)
+
+    return list(
+        filter(
+            lambda color: not (color == color1 or color == color2),
+            uniq(corners)))
 
 def uniq(l) :
     return { item for sublist in l for item in sublist }
