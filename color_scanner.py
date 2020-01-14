@@ -7,10 +7,14 @@
 #
 
 from pybricks.parameters import Color
-from pybricks.tools import print, wait, StopWatch
+from pybricks.tools import print, wait
 
 import cube, turntable, flip_arm, scan_arm
 import color_utils as cu
+
+##############################################################################
+def init() :
+    return
 
 ##############################################################################
 # Scan an entire face of the cube, starting with the center facelet.

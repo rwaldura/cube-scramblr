@@ -8,8 +8,8 @@
 #
 
 from pybricks.ev3devices import Motor
-from pybricks.parameters import (Port, Stop, Direction)
-from pybricks.tools import print, wait, StopWatch
+from pybricks.parameters import Port, Stop, Direction
+from pybricks.tools import print, wait
 
 ##############################################################################
 # globals and constants

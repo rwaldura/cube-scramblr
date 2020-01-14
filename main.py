@@ -9,7 +9,7 @@
 #
 
 from pybricks import ev3brick as brick 
-from pybricks.tools import print, wait, StopWatch
+from pybricks.tools import print, wait
 
 import random, time
 
@@ -111,6 +111,7 @@ def map_cube_colors() :
     # cube[] is a 6-array of 9-arrays containing R/G/B tuples for each facelet
     
     # identify the white face first
+    return
 
 ##############################################################################
 # Calibrate the color sensor; only used during development

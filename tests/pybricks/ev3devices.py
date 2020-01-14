@@ -1,7 +1,7 @@
 
 class Motor :
     # Motor(Port.B, Direction.CLOCKWISE, [12, 36])
-    def __init__(self, port, direction, gears) :
+    def __init__(self, port, direction=0, gears=None) :
         return
     def angle(self) : 
         return 90

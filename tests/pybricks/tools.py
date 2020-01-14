@@ -1,5 +1,7 @@
+import logging
+
 def print(*args) :
-    return
+    logging.info(args)
 
 def wait(ms) :
     return
