@@ -6,8 +6,10 @@ from cube import *
 
 def assertEqual(mesg, expected, actual) :
     if (expected != actual) :
-        print(mesg, "expected", expected, "but got instead", actual)
+        print("FAIL:", mesg, "expected", expected, "but got instead", actual)
         assert False
+    else :
+        print("pass:", mesg)
 
 ##############################################################################
 # main, for unit testing
