@@ -13,6 +13,8 @@ class Motor :
         return
     def run_target(self, speed, angle, stop=0, wait=True) :
         return
+    def run_until_stalled(self, speed) :
+        return
     def stop(self) :
         return 
 

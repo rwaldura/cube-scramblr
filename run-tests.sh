@@ -1,11 +1,13 @@
 #!/bin/sh
 
-PYTHONPATH="$PYTHONPATH:.:src"
+PYTHONPATH="$PYTHONPATH:..:../src"
 export PYTHONPATH
 
-for test in tests/test_*.py
+cd tests
+
+for test in test_*.py
 do
-    echo "===== $test ====="
+    echo "\n•••••• $test ••••••"
     python3 $test
 done
 
