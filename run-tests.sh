@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PYTHONPATH="$PYTHONPATH:."
+PYTHONPATH="$PYTHONPATH:.:src"
 export PYTHONPATH
 
-for test in tests/*.py
+for test in tests/test_*.py
 do
     echo "===== $test ====="
     python3 $test

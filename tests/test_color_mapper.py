@@ -11,7 +11,7 @@ assertEqual("mapping true BLACK",  Color.BLUE,  rgb2color({ 'r':  0, 'g':  0, 'b
 assertEqual("mapping true WHITE",  Color.WHITE, rgb2color({ 'r':100, 'g':100, 'b':100 }))
 
 # we struggle to correctly map pure primaries, so use made-up values instead
-assertEqual("mapping true RED",    Color.WHITE, rgb2color({ 'r':100, 'g':100, 'b':100 }))
+assertEqual("mapping true RED",    Color.WHITE, rgb2color({ 'r':100, 'g':  0, 'b':  0 }))
 assertEqual("mapping color RED",   Color.RED,   rgb2color({ 'r': 50, 'g': 10, 'b': 10 }))
 
 assertEqual("mapping true GREEN",  Color.BLUE,  rgb2color({ 'r':  0, 'g':100, 'b':  0 }))

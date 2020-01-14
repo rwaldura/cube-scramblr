@@ -13,8 +13,12 @@ from pybricks.tools import print, wait
 
 import random, time
 
+import sys
+sys.path.append('src')
+
 import cube, turntable, flip_arm, scan_arm, color_scanner
 import color_utils as cu
+
 
 ##############################################################################
 # globals and constants
