@@ -17,23 +17,20 @@ import color_utils as cu
 def scan_cube_face(face_num) :
     print("scanning face", face_num, "...")
 
-    face_color = scan_cube_face_center(face_num)
-    cube.set_center_rgb(face_num, face_color)
-    print("face", face_num, "may be", cu.rgb2str(face_color))
-
+    scan_cube_face_center(face_num)
     scan_cube_face_edges(face_num)
     
     scan_arm.reset()
     turntable.reset()   # re-align the table, due to accumulated errors
-
-    return facelets
 
 ##############################################################################
 # Scan the center facelet, return its color.
 # Bring arm to center, and read the color of the center facelet
 def scan_cube_face_center(face_num) :
     scan_arm.move_center()
-    return scan_arm.read_rgb()
+    rgb = scan_arm.read_rgb()
+    cube.set_center_rgb(face_num, rgb)
+    print("face", face_num, "may be", cu.rgb2str(rgb))
 
 ##############################################################################
 # Read each facelet, edges and corners: rotate the table by a entire turn, 
@@ -44,8 +41,8 @@ def scan_cube_face_center(face_num) :
 def scan_cube_face_edges(face_num) :
     scan_arm.move_edge()
 
-    # rotate cube
-    for i in range(8) :
+    # for each facelet
+    for i in range(1, 9) : # 1..8
         # if (i % 2 == 0) :
             # scan_arm.move_edge()
         # else :
@@ -53,11 +50,9 @@ def scan_cube_face_edges(face_num) :
 
         # read color underneath sensor
         rgb = scan_arm.read_rgb()
-        cube.set_facelet_rgb(face_num, i+1, rgb)
-        # print("face", face_num, "facelet", i+1, "may be", cu.rgb2str(rgb))
+        cube.set_facelet_rgb(face_num, i, rgb)
+        # print("face", face_num, "facelet", i, "may be", cu.rgb2str(rgb))
 
-        if (i < 7) :
+        if (i < 8) :
             turntable.next_facelet()
             # pause()
-
-    return face_colors

@@ -9,7 +9,7 @@
 from pybricks.parameters import Color
 
 _facelet = { 
-    'rgb': {'r':0, 'g':0, 'b':0 }, 
+    'rgb': { 'r':0, 'g':0, 'b':0 }, 
     'color': Color.BLACK 
 }
 
@@ -30,7 +30,8 @@ CUBE_COLORS = (
     # Color.PURPLE
 )
 
-# note color order does not matter
+# Corner pieces have these colors.
+# Note color order does not matter
 CUBE_CORNERS = (
     # from white face
     (Color.WHITE, Color.GREEN, Color.RED),
@@ -44,6 +45,7 @@ CUBE_CORNERS = (
     (Color.BLUE, Color.YELLOW, Color.ORANGE)
 )
 
+# Edge pieces.
 # again, tuple order does not matter
 # edge (green, orange) == edge (orange, green)
 CUBE_EDGES = (
@@ -64,6 +66,7 @@ CUBE_EDGES = (
     (Color.WHITE, Color.ORANGE)
 )
 
+##############################################################################
 # Return the color constant of a facelet, defined by its number
 # with: 
 # 0: center
@@ -102,21 +105,20 @@ def is_valid(color) :
 ##############################################################################
 # Return the possible colors for a corner piece, given 1 or 2 colors
 def corner_colors(color1, color2 = None) :
+    assert color1 != color2
+
     corners = filter(
         lambda corner: color1 in corner, 
         CUBE_CORNERS)
 
     if (color2 != None) :
-        assert color1 != color2
         corners = filter(
             lambda corner: color2 in corner,
             corners)
 
-    return set(
-        filter(
-            lambda color: not (color == color1 or color == color2),
-            uniq(corners)))
+    return uniq(corners) - { color1, color2 }
 
 ##############################################################################
+# Flatten a list, and return the unique elements
 def uniq(l) :
     return { item for sublist in l for item in sublist }

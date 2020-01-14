@@ -9,9 +9,9 @@
 # See LICENSE file for licensing information
 #
 
-from pybricks.ev3devices import (Motor, ColorSensor)
-from pybricks.parameters import (Port, Stop, Direction)
-from pybricks.tools import print, wait, StopWatch
+from pybricks.ev3devices import Motor, ColorSensor
+from pybricks.parameters import Port, Stop, Direction
+from pybricks.tools import print, wait
 
 ##############################################################################
 # globals and constants

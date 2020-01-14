@@ -3,4 +3,9 @@
 PYTHONPATH="$PYTHONPATH:."
 export PYTHONPATH
 
-python3 tests/test_cube.py
+for test in tests/*.py
+do
+    echo "===== $test ====="
+    python3 $test
+done
+
