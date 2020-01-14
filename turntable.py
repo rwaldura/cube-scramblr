@@ -117,4 +117,3 @@ def reset() :
     print("table is at", table_motor.angle())
     n = round(table_motor.angle() / 360)
     _rotate(360 * n, table_speed, False)
-

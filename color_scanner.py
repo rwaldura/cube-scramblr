@@ -6,10 +6,8 @@
 # See LICENSE file for licensing information
 #
 
-from pybricks.parameters import (Color)
+from pybricks.parameters import Color
 from pybricks.tools import print, wait, StopWatch
-
-import random, time
 
 import cube, turntable, flip_arm, scan_arm
 import color_utils as cu

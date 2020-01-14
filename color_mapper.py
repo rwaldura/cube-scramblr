@@ -6,7 +6,7 @@
 # See LICENSE file for licensing information
 #
 
-from pybricks.parameters import (Color)
+from pybricks.parameters import Color
 from pybricks.tools import print, wait, StopWatch
 
 import random, time

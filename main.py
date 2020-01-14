@@ -9,7 +9,6 @@
 #
 
 from pybricks import ev3brick as brick 
-from pybricks.parameters import (Port, Stop, Direction, Color, Button)
 from pybricks.tools import print, wait, StopWatch
 
 import random, time
@@ -22,9 +21,6 @@ import color_utils as cu
 
 # total number of scrambling moves: flips and rotations
 scrambling_moves = 10
-
-# cube face colors, indexed by scanning order
-cube = [None] * 6
 
 ##############################################################################
 def display(mesg) :
