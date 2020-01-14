@@ -26,68 +26,6 @@ COLOR_NAMES = (
     "purple"    # 9 - Color.PURPLE
 )
 
-# my cube has these colors, and no others
-CUBE_COLORS = (
-    # Color.BLACK
-    Color.BLUE,
-    Color.GREEN,
-    Color.YELLOW,
-    Color.RED,
-    Color.WHITE,
-    # Color.BROWN
-    Color.ORANGE
-    # Color.PURPLE
-)
-
-# note color order does not matter
-CUBE_CORNERS = (
-    # from white face
-    (Color.WHITE, Color.GREEN, Color.RED),
-    (Color.WHITE, Color.GREEN, Color.ORANGE),
-    (Color.RED, Color.WHITE, Color.BLUE),
-    (Color.ORANGE, Color.WHITE, Color.BLUE),
-    # from yellow face
-    (Color.ORANGE, Color.GREEN, Color.YELLOW),
-    (Color.YELLOW, Color.GREEN, Color.RED),
-    (Color.RED, Color.YELLOW, Color.BLUE),
-    (Color.BLUE, Color.YELLOW, Color.ORANGE)
-)
-
-# there are some duplicates in this list, since the order does not matter
-# edge (green, orange) == edge (orange, green)
-CUBE_EDGES = (
-    # green face: no blue
-    (Color.GREEN, Color.ORANGE),
-    (Color.GREEN, Color.YELLOW),
-    (Color.GREEN, Color.RED),
-    (Color.GREEN, Color.WHITE),
-    # red face: no orange
-    (Color.RED, Color.WHITE),
-    (Color.RED, Color.BLUE),
-    (Color.RED, Color.YELLOW),
-    (Color.RED, Color.GREEN), 
-    # white face: no yellow
-    (Color.WHITE, Color.GREEN), 
-    (Color.WHITE, Color.RED), 
-    (Color.WHITE, Color.BLUE),
-    (Color.WHITE, Color.ORANGE),
-    # orange face: no red
-    (Color.ORANGE, Color.WHITE), 
-    (Color.ORANGE, Color.BLUE),
-    (Color.ORANGE, Color.GREEN),
-    (Color.ORANGE, Color.YELLOW),
-    # blue face: no green
-    (Color.BLUE, Color.RED), 
-    (Color.BLUE, Color.WHITE),
-    (Color.BLUE, Color.ORANGE),
-    (Color.BLUE, Color.YELLOW),
-    # yellow face: no white
-    (Color.YELLOW, Color.BLUE), 
-    (Color.YELLOW, Color.GREEN),
-    (Color.YELLOW, Color.ORANGE),
-    (Color.YELLOW, Color.RED),
-)
-
 # values in 100-based RGB space, based on experimentation
 
 # yellow
@@ -144,7 +82,7 @@ def rgb2color(rgb) :
     # compute Euclidean distance to all known colors
     dist = [max_distance] * (1 + max(CUBE_COLORS))
     for c in (CUBE_COLORS) :
-        dist[c] = _distance2(rgb, CUBE_COLORS_RGB[c])
+        dist[c] = distance2(rgb, CUBE_COLORS_RGB[c])
         # print("distance to", color2str(c), "=", dist[c])
 
     # closest color has the lowest distance
@@ -160,12 +98,7 @@ def sqr(x) :
 # Optimization: since all we do is compare distances (the actual value
 # is not relevant), only return the squared distance -- no need to compute
 # the square root
-def _distance2(x, y) :
+def distance2(x, y) :
     return sqr(x['r'] - y['r']) 
     + sqr(x['g'] - y['g'])
     + sqr(x['b'] - y['b'])
-
-##############################################################################
-# Allowed colors for the cube
-def is_cube_color(color) :
-    return color in CUBE_COLORS

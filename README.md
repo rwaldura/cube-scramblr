@@ -38,4 +38,4 @@ Cube color logic helps color detection:
     * Orange is opposite Red
     * Green is opposite Blue
 * The 8 corner pieces are: R-W-G, etc.
-* 12 edge pieces are: ...
+* 12 edge pieces

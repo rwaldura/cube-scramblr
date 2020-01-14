@@ -14,7 +14,7 @@ from pybricks.tools import print, wait, StopWatch
 
 import random, time
 
-import turntable, flip_arm, scan_arm, color_scanner
+import cube, turntable, flip_arm, scan_arm, color_scanner
 import color_utils as cu
 
 ##############################################################################
@@ -103,7 +103,7 @@ def scan_cube(debug = False) :
         elif (face > 0) :
             flip_cube()
 
-        cube[face] = color_scanner.scan_cube_face(face)
+        color_scanner.scan_cube_face(face)
 
         if (debug) :
             pause()
@@ -112,8 +112,9 @@ def scan_cube(debug = False) :
 # We've scanned the entire cube, and read RGB samples for each facelet.
 # Now map each facelet to an actual color constant. 
 def map_cube_colors() :
-    # cube[] is a 6-array of 9-arrays
-    x = 0
+    # cube[] is a 6-array of 9-arrays containing R/G/B tuples for each facelet
+    
+    # identify the white face first
 
 ##############################################################################
 # Calibrate the color sensor; only used during development

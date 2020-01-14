@@ -73,12 +73,12 @@ def move_center() :
 
 ##############################################################################
 def read_rgb() :
-    return read_rgb_avg(default_num_samples)
+    return _read_rgb_avg(default_num_samples)
 
 ##############################################################################
 # Sample color multiple times, and pick the average
 # Returns a R,G,B dict
-def read_rgb_avg(num_samples) :
+def _read_rgb_avg(num_samples) :
 
     rgb_samples = { 
         'r' : [0] * num_samples,
@@ -110,10 +110,10 @@ def read_color() :
     attempts = 0
 
     while (True) :
-        color = color_utils.rgb2color(read_rgb_avg())
+        color = color_utils.rgb2color(read_rgb())
         attempts += 1
 
-        if (color_utils.is_cube_color(color)) :
+        if (cube.is_valid(color)) :
             break # success
         elif (attempts >= scan_sensor_max_attempts) :
             print("no valid color read after multiple attempts, giving up")
