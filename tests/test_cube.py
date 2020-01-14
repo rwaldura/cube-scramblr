@@ -2,11 +2,12 @@
 # Unit test.
 # 
 
-import cube *
+from cube import *
 
 def assertEqual(mesg, expected, actual) :
     if (expected != actual) :
-        assert(mesg, "expected", expected, "but got instead", actual)
+        print(mesg, "expected", expected, "but got instead", actual)
+        assert False
 
 ##############################################################################
 # main, for unit testing
