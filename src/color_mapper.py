@@ -49,7 +49,7 @@ max_distance = 30000 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cub
 ##############################################################################
 # Map a R/G/B dict to a known Color constant
 def rgb2color(rgb) :
-    print("mapping R/G/B", rgb['r'], rgb['g'], rgb['b'])
+    print("mapping RGB {}/{}/{}".format(rgb['r'], rgb['g'], rgb['b']))
 
     # compute Euclidean distance to all known colors
     dist = [max_distance] * (1 + max(cube.CUBE_COLORS))
