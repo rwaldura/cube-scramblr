@@ -137,6 +137,9 @@ def to_str() :
             rgb = facelet_rgb(face, facelet)
             (red, green, blue) = (rgb['r'], rgb['g'], rgb['b'])
             color = color_utils.rgb2str(rgb)
-            result.append(f"face {face} facelet {facelet} RGB {red}/{green}/{blue} mapped to {color}")
+            s = "face {} facelet {} RGB {}/{}/{} mapped to {}".format(
+                face, facelet, red, green, blue, color
+            )
+            result.append(s)
 
     return "\n".join(result)

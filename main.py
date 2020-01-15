@@ -107,10 +107,9 @@ def scan_cube(debug = False) :
         color_scanner.scan_cube_face(face)
 
         if (debug) :
+            print(cube.to_str())
             pause()
 
-    if (debug) :
-        cube.print()
 
 ##############################################################################
 # We've scanned the entire cube, and read RGB samples for each facelet.
@@ -166,7 +165,7 @@ while not any(brick.buttons()):
 if (do_scramble) :
     scramble_cube()
 elif (do_resolve) :
-    scan_cube(False)
+    scan_cube(True)
     map_cube_colors()
 else :        
     calibrate_color_sensor()
