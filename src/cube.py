@@ -8,14 +8,19 @@
 
 from pybricks.parameters import Color
 
+import color_utils
+
 _facelet = { 
     'rgb': { 'r':0, 'g':0, 'b':0 }, 
     'color': Color.BLACK 
 }
 
-_face = [_facelet] * 9
-
-_cube = [_face] * 6
+# initialize the cube
+_cube = [None] * 6
+for i in range(6) :
+    _cube[i] = [None] * 9
+    for j in range(9) :
+        _cube[i][j] = dict(_facelet)
 
 # my cube has these colors, and no others
 CUBE_COLORS = (
@@ -122,3 +127,16 @@ def corner_colors(color1, color2 = None) :
 # Flatten a list, and return the unique elements
 def uniq(l) :
     return { item for sublist in l for item in sublist }
+
+##############################################################################
+def to_str() :
+    result = []
+
+    for face in range(len(_cube)) :
+        for facelet in range(len(_cube[face])) :
+            rgb = facelet_rgb(face, facelet)
+            (red, green, blue) = (rgb['r'], rgb['g'], rgb['b'])
+            color = color_utils.rgb2str(rgb)
+            result.append(f"face {face} facelet {facelet} RGB {red}/{green}/{blue} mapped to {color}")
+
+    return "\n".join(result)

@@ -9,6 +9,7 @@
 #
 
 from pybricks import ev3brick as brick 
+from pybricks.parameters import Button
 from pybricks.tools import print, wait
 
 import random, time
@@ -107,6 +108,9 @@ def scan_cube(debug = False) :
 
         if (debug) :
             pause()
+
+    if (debug) :
+        cube.print()
 
 ##############################################################################
 # We've scanned the entire cube, and read RGB samples for each facelet.

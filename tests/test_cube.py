@@ -5,17 +5,32 @@
 from cube import *
 from asserts import *
 
-set_center(2, Color.WHITE)
-assertEqual("set center color", Color.WHITE, center(2))
+set_center(1, Color.WHITE)
+assertEqual("1.1. center color", Color.BLACK, center(0))
+assertEqual("1.2. center color", Color.WHITE, center(1))
+assertEqual("1.3. center color", Color.BLACK, center(2))
 
-set_center_rgb(3, {'r':12, 'g':24, 'b':42})
-assertEqual("set center color rgb", {'r':12, 'g':24, 'b':42}, center_rgb(2))
+set_center_rgb(2, {'r':12, 'g':24, 'b':42})
+assertEqual("2.1. center color rgb", {'r': 0, 'g': 0, 'b': 0}, center_rgb(1))
+assertEqual("2.2. center color rgb", {'r':12, 'g':24, 'b':42}, center_rgb(2))
+assertEqual("2.3. center color rgb", {'r': 0, 'g': 0, 'b': 0}, center_rgb(3))
+assertEqual("2.4. center color", Color.BLACK, center(2))
 
 set_facelet(2, 1, Color.BLUE)
-assertEqual("set facelet color", Color.BLUE, facelet(2, 1))
+assertEqual("3.1. facelet color", Color.BLUE,  facelet(2, 1))
+assertEqual("3.2. facelet color", Color.BLACK, facelet(2, 2))
+assertEqual("3.3. center color rgb", {'r':12, 'g':24, 'b':42}, center_rgb(2))
+assertEqual("3.4. center color", Color.WHITE, center(1))
+assertEqual("3.5. center color", Color.BLACK, center(2))
 
 set_facelet_rgb(1, 4, {'r':2, 'g':3, 'b':4})
-assertEqual("set facelet color rgb", {'r':2, 'g':3, 'b':4}, facelet_rgb(1, 4))
+assertEqual("4.1. facelet color rgb", {'r':2, 'g':3, 'b':4}, facelet_rgb(1, 4))
+assertEqual("4.2. facelet color", Color.BLUE, facelet(2, 1))
+assertEqual("4.3. center color rgb", {'r':12, 'g':24, 'b':42}, center_rgb(2))
+assertEqual("4.4. center color", Color.WHITE, center(1))
+assertEqual("4.5. center color", Color.BLACK, center(2))
+
+# print(to_str())
 
 assertTrue("valid color 1", is_valid(Color.GREEN))
 assertTrue("valid color 2", not is_valid(Color.PURPLE))
