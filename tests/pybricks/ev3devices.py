@@ -15,7 +15,7 @@ class Motor :
     def run_target(self, speed, angle, stop=0, wait=True) :
         self._angle = angle
     def run_until_stalled(self, speed) :
-        self._angle = 99
+        self._angle = 360
     def stop(self) :
         pass 
 

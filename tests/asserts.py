@@ -1,16 +1,20 @@
+
+pass_mark = '✔'
+fail_mark = '✘'
+
 def assertTrue(mesg, cond) :
     if (not cond) :
-        print("FAIL:", mesg)
+        print(fail_mark, mesg)
         assert cond
     else :
-        print("pass:", mesg)
+        print(pass_mark, mesg)
 
 def assertEqual(mesg, expected, actual) :
     if (expected != actual) :
-        print("FAIL:", mesg, "expected", expected, "but got instead", actual)
+        print(fail_mark, mesg, "expected", expected, "but got instead", actual)
         assert False
     else :
-        print("pass:", mesg)
+        print(pass_mark, mesg)
 
 def assertListEqual(mesg, expected, actual) :
     assertEqual(mesg, len(expected), len(actual))
