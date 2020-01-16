@@ -14,7 +14,7 @@ import color_utils as cu
 
 ##############################################################################
 def init() :
-    return
+    pass
 
 ##############################################################################
 # Scan an entire face of the cube, starting with the center facelet.

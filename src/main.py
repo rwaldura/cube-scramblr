@@ -1,4 +1,3 @@
-#!/usr/bin/env pybricks-micropython
 #
 # The structure, the build, is based off David Gilday's MindCub3r
 # at https://www.mindcuber.com/mindcub3r/mindcub3r.html
@@ -9,7 +8,7 @@
 #
 
 from pybricks import ev3brick as brick 
-from pybricks.parameters import Button
+from pybricks.parameters import Button, Color
 from pybricks.tools import print, wait
 
 import random, time
@@ -40,7 +39,6 @@ def init_all() :
     random.seed(int(time.time()))
 
     brick.display.clear()
-    display("CUBE SCRAMBL3R")
 
     flip_arm.init()
     turntable.init()
@@ -90,7 +88,7 @@ def scramble_cube(moves = default_scrambling_moves) :
 
 ##############################################################################
 # Visit all 6 faces of the cube, scanning each one.
-# Populate the cube[] array.
+# Populate the "cube" data structure.
 def scan_cube(debug = False) :
     for face in range(6) :
         if (face == 4) :

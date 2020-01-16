@@ -18,21 +18,23 @@ run_tests()
         fi
     done
 
-if test $# -gt 0
+if [ $# -eq 0 ]
 then
-    # run tests specified on command line
-    run_tests $*
-else
     # run all tests
     run_tests tests/test_*.py
+else
+    # run tests specified on command line
+    run_tests $*
 fi
 
 # print report
 if test -n "$failed_tests"
 then
+    # bright bold red
     echo "\n\033[91;1m✘ TESTS FAILED: \033[0m$failed_tests"
     exit 1
 else   
+    # bright bold green
     echo "\n\033[92;1m✔ ALL TESTS PASSED\033[0m"
     exit 0
 fi

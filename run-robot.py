@@ -21,6 +21,7 @@ from main import *
 # main
 init_all()
 
+display("CUBE SCRAMBL3R")
 display("Insert cube")
 display("Press UP button to")
 display("scramble, DOWN button")

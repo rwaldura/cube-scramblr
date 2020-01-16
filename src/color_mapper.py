@@ -1,5 +1,6 @@
 #
 # Color scanning logic.
+# This module implements logic to determine the Color of a facelet.
 #
 # by Ren Waldura ren+lego@waldura.org, 2020
 #
