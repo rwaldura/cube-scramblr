@@ -1,7 +1,7 @@
 import logging
 
 logging.basicConfig(
-    format="%(message)s",
+    format=". %(message)s",
     level=logging.DEBUG)
 
 def print(*args) :
