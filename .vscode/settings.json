@@ -3,5 +3,5 @@
 	"files.eol": "\n",
 	"debug.openDebug": "neverOpen",
 	"python.linting.enabled": false,
-	"ev3devBrowser.download.exclude": "**/__pycache__"
+	"ev3devBrowser.download.include": "{*.py,src/*.py}"
 }
