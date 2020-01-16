@@ -11,7 +11,7 @@ from pybricks.ev3devices import Motor, ColorSensor
 from pybricks.parameters import Port, Stop, Direction, Color
 from pybricks.tools import print, wait
 
-import color_utils
+import color_utils, color_mapper, cube
 
 ##############################################################################
 # globals and constants
@@ -110,7 +110,7 @@ def read_color() :
     attempts = 0
 
     while (True) :
-        color = color_utils.rgb2color(read_rgb())
+        color = color_mapper.rgb2color(read_rgb())
         attempts += 1
 
         if (cube.is_valid(color)) :

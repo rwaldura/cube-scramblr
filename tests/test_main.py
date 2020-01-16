@@ -3,6 +3,10 @@
 #
 
 from main import *
+from asserts import *
 
 init_all()
-print("pass: init_all")
+assertTrue("init_all", True)
+
+scramble_cube(1)
+assertTrue("scramble_cube", True)

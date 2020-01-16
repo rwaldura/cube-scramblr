@@ -14,18 +14,14 @@ from pybricks.tools import print, wait
 
 import random, time
 
-import sys
-sys.path.append('src')
-
 import cube, turntable, flip_arm, scan_arm, color_scanner
 import color_utils as cu
-
 
 ##############################################################################
 # globals and constants
 
 # total number of scrambling moves: flips and rotations
-scrambling_moves = 10
+default_scrambling_moves = 10
 
 ##############################################################################
 def display(mesg) :
@@ -78,8 +74,8 @@ def flip_cube(n = 1, reset_arm = True) :
     flip_arm.flip_cube(n, reset_arm)
 
 ##############################################################################
-def scramble_cube() :
-    for n in range(scrambling_moves) :
+def scramble_cube(moves = default_scrambling_moves) :
+    for n in range(moves) :
         r = random.randint(-3, 3)
         print("performing layer rotations", r)
         rotate_cube_layer(r)
@@ -110,7 +106,6 @@ def scan_cube(debug = False) :
             print(cube.to_str())
             pause()
 
-
 ##############################################################################
 # We've scanned the entire cube, and read RGB samples for each facelet.
 # Now map each facelet to an actual color constant. 
@@ -138,34 +133,3 @@ def calibrate_color_sensor() :
 
         scan_arm.reset()
         pause()
-
-##############################################################################
-# main
-
-init_all()
-
-display("Insert cube")
-display("Press UP button to")
-display("scramble, DOWN button")
-display("to resolve")
-brick.sound.beep()
-
-do_scramble = False
-do_resolve = False
-
-while not any(brick.buttons()):
-    wait(100)
-    if (Button.UP in brick.buttons()) :
-        do_scramble = True
-        break
-    elif (Button.DOWN in brick.buttons()) :
-        do_resolve = True
-        break
-
-if (do_scramble) :
-    scramble_cube()
-elif (do_resolve) :
-    scan_cube(True)
-    map_cube_colors()
-else :        
-    calibrate_color_sensor()
