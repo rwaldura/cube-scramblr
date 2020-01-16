@@ -28,3 +28,10 @@ class Stop :
     COAST = 1
     HOLD = 2
     BRAKE = 4
+
+class Button :
+    UP = 1
+    DOWN = 2
+    LEFT = 3
+    RIGHT = 4
+    
