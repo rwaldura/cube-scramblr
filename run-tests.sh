@@ -30,9 +30,9 @@ fi
 # print report
 if test -n "$failed_tests"
 then
-    echo "\n✘ TESTS FAILED: $failed_tests"
+    echo "\n\033[91;1m✘ TESTS FAILED: \033[0m$failed_tests"
     exit 1
 else   
-    echo "\n✔ ALL TESTS PASSED"
+    echo "\n\033[92;1m✔ ALL TESTS PASSED\033[0m"
     exit 0
 fi

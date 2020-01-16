@@ -15,6 +15,7 @@ scan_cube_face_center(1)
 assertEqual("scan_cube_face_center 1", {'r':  0, 'g':  0, 'b':  0}, cube.center_rgb(0))
 assertEqual("scan_cube_face_center 2", Color.BLACK, cube.center(0))
 
+# positive test
 assertEqual("scan_cube_face_center 3", {'r':100, 'g':100, 'b':100}, cube.center_rgb(1))
 # scanner doesn't map colors
 assertEqual("scan_cube_face_center 4", Color.BLACK, cube.center(1))
@@ -35,5 +36,8 @@ for i in range(1, 9) :
 scan_cube_face(4)
 
 for i in range(0, 9) : 
-    assertEqual("scan_cube_face", {'r':100, 'g':100, 'b':100}, cube.facelet_rgb(4, i))
+    assertEqual("scan_cube_face 5", {'r':100, 'g':100, 'b':100}, cube.facelet_rgb(4, i))
 
+# verify only face 4 was changed
+for i in range(0, 9) : 
+    assertEqual("scan_cube_face 6", {'r':0, 'g':0, 'b':0}, cube.facelet_rgb(5, i))

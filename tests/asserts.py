@@ -1,6 +1,6 @@
 
-pass_mark = '✔'
-fail_mark = '✘'
+pass_mark = "\033[92m✔\033[m"
+fail_mark = '\033[91m✘\033[m'
 
 def assertTrue(mesg, cond) :
     if (not cond) :
