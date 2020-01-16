@@ -25,6 +25,6 @@ class ColorSensor :
     def color(self) :
         return None
     def rgb(self) :
-        return (0,0,0)
+        return (100,100,100)
     def reflection(self) :
         return 0
