@@ -11,6 +11,7 @@ from pybricks.parameters import Color
 from pybricks.tools import print
 
 import cube
+import color_utils as cu
 
 # values in 100-based RGB space, based on experimentation
 
@@ -45,7 +46,7 @@ CUBE_COLORS_RGB = (
     None                            # 9 - purple (undefined)
 )
 
-max_distance = 30000 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cube
+MAX_DISTANCE = 3 * 100 * 100 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cube
 
 ##############################################################################
 # Map a R/G/B dict to a known Color constant
@@ -58,7 +59,7 @@ def rgb2color(rgb) :
 # Compute Euclidean distance to all known colors, and 
 # return the known color that has the shortest distance to parameter.
 def pick_closest_color(rgb) :
-    dist = [max_distance] * (1 + max(cube.CUBE_COLORS))
+    dist = [MAX_DISTANCE] * (1 + max(cube.CUBE_COLORS))
 
     for c in (cube.CUBE_COLORS) :
         dist[c] = distance2(rgb, CUBE_COLORS_RGB[c])
@@ -72,22 +73,49 @@ def sqr(x) :
 ##############################################################################
 # Compute Euclidean distance (squared) between 2 points in RGB space. 
 # Optimization: since all we do is compare distances (the actual value
-# is not relevant), only return the squared distance -- no need to compute
+# is irrelevant), only return the squared distance -- no need to compute
 # the square root
 def distance2(x, y) :
-    return sqr(x['r'] - y['r']) 
-    + sqr(x['g'] - y['g'])
-    + sqr(x['b'] - y['b'])
+    d = sqr(x['r'] - y['r']) + sqr(x['g'] - y['g']) + sqr(x['b'] - y['b'])
+    # print("distance between", x, "and", y, "=", d)
+    return d
 
 ##############################################################################
-# Return an list of colors, ordered by their distance to the RGB sample
-# given as parameter. The closest color is first in the list.
+# Assign a color to each center facelet -- it represents the face color.
+#
+# Compute distance for each face color. The face that has the highest
+# distance overall, is labelled White. Its opposite face is Yellow.
+# The face that has the smallest distance from black is Blue. Its opposite 
+# face is Green.
+# For red, we pick the face with the highest red component. The last face is 
+# therefore Orange.
+def map_face_centers() :
+    dist = [0] * 6
+    for f in range(6) :
+        dist[f] = distance2(cube.center_rgb(f), cu.RGB_BLACK)
+        print("face", f, "color", cube.center_rgb(f), "distance to black", dist[f])
+
+    map_face_center(dist.index(max(dist)), Color.WHITE)
+    map_face_center(dist.index(min(dist)), Color.BLUE)
+
+    # find how close the last un-mapped faces are to RED
+    for f in range(6) :
+        if (cube.is_valid(cube.center(f))) :
+            dist[f] = MAX_DISTANCE # skip mapped face
+        else :
+            dist[f] = distance2(cube.center_rgb(f), cu.RGB_RED)
+
+    map_face_center(dist.index(min(dist)), Color.RED)
 
 ##############################################################################
-# Compare each face to all possible colors. The face that has the highest
-# distance overall, is labelled White. Its opposite is Yellow.
-# The face that the smallest distance from black is Blue. Its opposite is Green.
-# For red, we pick the face with the highest red component. The last one is 
-# Orange.
-def map_faces() :
-    pass
+def map_face_center(face, color) :
+    # sanity: do not overwrite a previous mapping
+    assert cube.center(face) == Color.BLACK
+
+    cube.set_center(face, color)
+    print("face #", face, "mapped to", cu.color2str(color))
+
+    opp_face = cube.opposite_face(face)
+    cube.set_center(opp_face, cube.opposite_color(color))
+    print("opposite face #", opp_face, "mapped to", cu.color2str(cube.center(opp_face)))
+

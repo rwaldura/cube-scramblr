@@ -10,17 +10,15 @@ from pybricks.parameters import Color
 
 import color_utils as cu
 
-_facelet = { 
-    'rgb': { 'r':0, 'g':0, 'b':0 }, 
-    'color': Color.BLACK 
-}
-
 # initialize the cube
 _cube = [None] * 6
 for i in range(6) :
     _cube[i] = [None] * 9
     for j in range(9) :
-        _cube[i][j] = dict(_facelet)
+        _cube[i][j] = { 
+            'rgb': cu.RGB_BLACK, 
+            'color': Color.BLACK 
+        }
 
 # my cube has these colors, and no others
 CUBE_COLORS = (
@@ -36,7 +34,7 @@ CUBE_COLORS = (
 )
 
 # index is the color, yields opposite face color
-CUBE_OPPOSITE_FACE_COLORS = (
+CUBE_OPPOSITE_COLORS = (
     None,           # no color
     None,           # Color.BLACK
     Color.GREEN,    # Color.BLUE
@@ -149,17 +147,33 @@ def to_str() :
     for face in range(len(_cube)) :
         for facelet in range(len(_cube[face])) :
             rgb = facelet_rgb(face, facelet)
-            (red, green, blue) = (rgb['r'], rgb['g'], rgb['b'])
-            color = cu.rgb2str(rgb)
             s = "face {} facelet {} RGB {}/{}/{} mapped to {}".format(
-                face, facelet, red, green, blue, color
+                face, facelet, rgb['r'], rgb['g'], rgb['b'], cu.rgb2str(rgb)
             )
             result.append(s)
 
     return "\n".join(result)
 
 ##############################################################################
-def opposite_face_color(face_color) :
-    c = CUBE_OPPOSITE_FACE_COLORS[face_color]
-    print("opposite color for", cu.color2str(face_color), "is", cu.color2str(c))
+def opposite_color(color) :
+    c = CUBE_OPPOSITE_COLORS[color]
+    # print("opposite color for", cu.color2str(color), "is", cu.color2str(c))
     return c
+
+##############################################################################
+def opposite_face(face) :
+    f = None
+    if (face >= 0 and face < 4) :
+        f = (face + 2) % 4
+    elif (face == 4) :
+        f = face + 1
+    elif (face == 5) :
+        f = face - 1 
+    return f
+
+##############################################################################
+def reset() :
+    for i in range(6) :
+        for j in range(9) :
+            set_facelet(i, j, Color.BLACK)
+            set_facelet_rgb(i, j, cu.RGB_BLACK)

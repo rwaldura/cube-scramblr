@@ -28,6 +28,12 @@ COLOR_NAMES = (
     "purple"    # 9 - Color.PURPLE
 )
 
+RGB_BLACK = { 'r':  0, 'g':  0, 'b':  0 }
+RGB_RED   = { 'r':100, 'g':  0, 'b':  0 }
+RGB_GREEN = { 'r':  0, 'g':100, 'b':  0 }
+RGB_BLUE  = { 'r':  0, 'g':  0, 'b':100 }
+RGB_WHITE = { 'r':100, 'g':100, 'b':100 }
+
 ##############################################################################
 # Return the name of a given Color
 def color2str(color) :
