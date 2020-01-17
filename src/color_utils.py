@@ -16,7 +16,7 @@ import color_mapper
 # globals and constants
 
 COLOR_NAMES = (
-    "",         # 0 - None
+    None,       # 0 - None
     "black",    # 1 - Color.BLACK
     "blue",     # 2 - Color.BLUE
     "green",    # 3 - Color.GREEN

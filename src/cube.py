@@ -8,7 +8,7 @@
 
 from pybricks.parameters import Color
 
-import color_utils
+import color_utils as cu
 
 _facelet = { 
     'rgb': { 'r':0, 'g':0, 'b':0 }, 
@@ -33,6 +33,20 @@ CUBE_COLORS = (
     # Color.BROWN
     Color.ORANGE
     # Color.PURPLE
+)
+
+# index is the color, yields opposite face color
+CUBE_OPPOSITE_FACE_COLORS = (
+    None,           # no color
+    None,           # Color.BLACK
+    Color.GREEN,    # Color.BLUE
+    Color.BLUE,     # Color.GREEN
+    Color.WHITE,    # Color.YELLOW
+    Color.ORANGE,   # Color.RED
+    Color.YELLOW,   # Color.WHITE
+    None,           # Color.BROWN
+    Color.RED,      # Color.ORANGE
+    None            # Color.PURPLE
 )
 
 # Corner pieces have these colors.
@@ -136,10 +150,16 @@ def to_str() :
         for facelet in range(len(_cube[face])) :
             rgb = facelet_rgb(face, facelet)
             (red, green, blue) = (rgb['r'], rgb['g'], rgb['b'])
-            color = color_utils.rgb2str(rgb)
+            color = cu.rgb2str(rgb)
             s = "face {} facelet {} RGB {}/{}/{} mapped to {}".format(
                 face, facelet, red, green, blue, color
             )
             result.append(s)
 
     return "\n".join(result)
+
+##############################################################################
+def opposite_face_color(face_color) :
+    c = CUBE_OPPOSITE_FACE_COLORS[face_color]
+    print("opposite color for", cu.color2str(face_color), "is", cu.color2str(c))
+    return c

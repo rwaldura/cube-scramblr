@@ -63,3 +63,27 @@ assertEqual("corner colors 5",
 assertEqual("corner colors 6", 
     set(), 
     corner_colors(Color.ORANGE, Color.RED))
+
+assertEqual("opposite face 1.1",
+    Color.YELLOW,
+    opposite_face_color(Color.WHITE))
+
+assertEqual("opposite face 1.2",
+    Color.WHITE,
+    opposite_face_color(Color.YELLOW))
+
+assertEqual("opposite face 2.1",
+    Color.BLUE,
+    opposite_face_color(Color.GREEN))
+
+assertEqual("opposite face 2.2",
+    Color.GREEN,
+    opposite_face_color(Color.BLUE))
+
+assertEqual("opposite face 3.1",
+    Color.RED,
+    opposite_face_color(Color.ORANGE))
+
+assertEqual("opposite face 3.2",
+    Color.ORANGE,
+    opposite_face_color(Color.RED))
