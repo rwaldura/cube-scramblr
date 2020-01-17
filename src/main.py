@@ -107,10 +107,12 @@ def scan_cube(debug = False) :
 ##############################################################################
 # We've scanned the entire cube, and read RGB samples for each facelet.
 # Now map each facelet to an actual color constant. 
-def map_cube_colors() :
-    # cube[] is a 6-array of 9-arrays containing R/G/B tuples for each facelet
-    
+def map_cube_colors() :    
     # identify the white face first
+    white_face = color_mapper.find_white_face()
+
+    # the opposite of the white face is the yellow face
+
     return
 
 ##############################################################################

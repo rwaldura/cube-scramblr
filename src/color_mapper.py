@@ -51,17 +51,20 @@ max_distance = 30000 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cub
 # Map a R/G/B dict to a known Color constant
 def rgb2color(rgb) :
     print("mapping RGB {}/{}/{}".format(rgb['r'], rgb['g'], rgb['b']))
+    color = pick_closest_color(rgb)
+    return color
 
-    # compute Euclidean distance to all known colors
+##############################################################################
+# Compute Euclidean distance to all known colors, and 
+# return the known color that has the shortest distance to parameter.
+def pick_closest_color(rgb) :
     dist = [max_distance] * (1 + max(cube.CUBE_COLORS))
+
     for c in (cube.CUBE_COLORS) :
         dist[c] = distance2(rgb, CUBE_COLORS_RGB[c])
         # print("distance to", color2str(c), "=", dist[c])
 
-    # closest color has the lowest distance
-    color = dist.index(min(dist))
-    # print("found closest color", color, color2str(color))
-    return color
+    return dist.index(min(dist))
 
 def sqr(x) :
     return x * x
@@ -75,3 +78,16 @@ def distance2(x, y) :
     return sqr(x['r'] - y['r']) 
     + sqr(x['g'] - y['g'])
     + sqr(x['b'] - y['b'])
+
+##############################################################################
+# Return an list of colors, ordered by their distance to the RGB sample
+# given as parameter. The closest color is first in the list.
+
+##############################################################################
+# Compare each face to all possible colors. The face that has the highest
+# distance overall, is labelled White. Its opposite is Yellow.
+# The face that the smallest distance from black is Blue. Its opposite is Green.
+# For red, we pick the face with the highest red component. The last one is 
+# Orange.
+def map_faces() :
+    pass
