@@ -38,11 +38,11 @@ CUBE_COLORS_RGB = (
     None,                           # 1 - black (undefined)
     { 'r': 12, 'g': 20, 'b': 34 },  # 2 - blue
     { 'r': 15, 'g': 30, 'b': 10 },  # 3 - green
-    { 'r': 70, 'g': 65, 'b': 43 },  # 4 - yellow
+    { 'r': 50, 'g': 60, 'b': 43 },  # 4 - yellow
     { 'r': 50, 'g': 19, 'b':  9 },  # 5 - red
-    { 'r': 75, 'g': 75, 'b': 75 },  # 6 - white
+    { 'r': 65, 'g': 65, 'b': 65 },  # 6 - white
     None,                           # 7 - brown (undefined)
-    { 'r': 56, 'g': 39, 'b': 12 },  # 8 - orange
+    { 'r': 50, 'g': 39, 'b': 12 },  # 8 - orange
     None                            # 9 - purple (undefined)
 )
 
@@ -56,7 +56,7 @@ def rgb2str(rgb) :
 ##############################################################################
 # Map a R/G/B dict to a known Color constant
 def rgb2color(rgb) :
-    print("mapping RGB {}/{}/{}".format(rgb['r'], rgb['g'], rgb['b']))
+    # print("mapping RGB {}/{}/{}".format(rgb['r'], rgb['g'], rgb['b']))
     color = pick_closest_color(rgb)
     return color
 
@@ -81,7 +81,9 @@ def sqr(x) :
 # is irrelevant), only return the squared distance -- no need to compute
 # the square root
 def distance2(x, y) :
-    d = sqr(x['r'] - y['r']) + sqr(x['g'] - y['g']) + sqr(x['b'] - y['b'])
+    (xR, xG, xB) = (x['r'], x['g'], x['b'])
+    (yR, yG, yB) = (y['r'], y['g'], y['b'])
+    d = sqr(xR - yR) + sqr(xG - yG) + sqr(xB - yB)
     # print("distance between", x, "and", y, "=", d)
     return d
 
@@ -115,9 +117,9 @@ def map_face_center(face, color) :
     # assert cube.center(face) == cu.RGB_BLACK
 
     cube.set_center(face, color)
-    print("face #", face, "mapped to", cu.color2str(color))
+    print("face", face, "mapped to", cu.color2str(color))
 
     opp_face = cube.opposite_face(face)
     cube.set_center(opp_face, cube.opposite_color(color))
-    print("opposite face #", opp_face, "mapped to", cu.color2str(cube.center(opp_face)))
+    print("opposite face", opp_face, "mapped to", cu.color2str(cube.center(opp_face)))
 

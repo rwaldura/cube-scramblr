@@ -123,13 +123,13 @@ def calibrate_color_sensor() :
     while (True) :
         scan_arm.move_center()
         rgb = scan_arm.read_rgb()
-        print("center color", rgb['r'], rgb['g'], rgb['b'])
+        print("center color", rgb)
         color = scan_arm.read_color()
         print("center color mapped to", cu.color2str(color))
 
         scan_arm.move_edge()
         rgb = scan_arm.read_rgb()
-        print("edge color", rgb['r'], rgb['g'], rgb['b'])
+        print("edge color", rgb)
         color = scan_arm.read_color()
         print("edge color mapped to", cu.color2str(color))
 

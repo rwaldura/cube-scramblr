@@ -42,14 +42,12 @@ def scan_cube_face_center(face_num) :
 # This will require some solid post-processing to isolate distinct 
 # facelet colors.
 def scan_cube_face_edges(face_num) :
-    scan_arm.move_edge()
-
     # for each facelet
     for i in range(1, 9) : # 1..8
-        # if (i % 2 == 0) :
-            # scan_arm.move_edge()
-        # else :
-            # scan_arm.move_corner()
+        if (i % 2 == 1) :
+            scan_arm.move_edge()
+        else :
+            scan_arm.move_corner()
 
         # read color underneath sensor
         rgb = scan_arm.read_rgb()

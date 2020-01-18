@@ -39,11 +39,17 @@ while not any(brick.buttons()):
     elif (Button.DOWN in brick.buttons()) :
         do_resolve = True
         break
+    elif (Button.CENTER in brick.buttons()) :
+        do_calibrate = True
+        break
 
 if (do_scramble) :
     scramble_cube()
 elif (do_resolve) :
-    scan_cube(True)
-    map_cube_colors()
-else :        
+    scan_cube(False)
+    map_cube_colors(True)
+elif (do_calibrate) :        
     calibrate_color_sensor()
+else :
+    pass
+
