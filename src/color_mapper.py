@@ -49,6 +49,11 @@ CUBE_COLORS_RGB = (
 MAX_DISTANCE = 3 * 100 * 100 # (√3 * 100)^2, the squared diagonal of a 100x100x100 cube
 
 ##############################################################################
+# Return the name of a given Color
+def rgb2str(rgb) :
+    return cu.color2str(rgb2color(rgb))
+
+##############################################################################
 # Map a R/G/B dict to a known Color constant
 def rgb2color(rgb) :
     print("mapping RGB {}/{}/{}".format(rgb['r'], rgb['g'], rgb['b']))
@@ -109,9 +114,6 @@ def map_face_centers() :
 
 ##############################################################################
 def map_face_center(face, color) :
-    # sanity: do not overwrite a previous mapping
-    assert cube.center(face) == Color.BLACK
-
     cube.set_center(face, color)
     print("face #", face, "mapped to", cu.color2str(color))
 

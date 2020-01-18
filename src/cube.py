@@ -148,8 +148,7 @@ def to_str() :
         for facelet in range(len(_cube[face])) :
             rgb = facelet_rgb(face, facelet)
             s = "face {} facelet {} RGB {}/{}/{} mapped to {}".format(
-                face, facelet, rgb['r'], rgb['g'], rgb['b'], cu.rgb2str(rgb)
-            )
+                face, facelet, rgb['r'], rgb['g'], rgb['b'], cu.rgb2str(rgb))
             result.append(s)
 
     return "\n".join(result)

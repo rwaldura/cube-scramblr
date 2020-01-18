@@ -16,13 +16,12 @@ assertEqual("distance white-black", MAX_DISTANCE, distance2(cu.RGB_WHITE, cu.RGB
 
 ##############################################################################
 assertEqual("mapping true WHITE",  Color.WHITE, rgb2color(cu.RGB_WHITE))
-
-# tricky-tricky: the black color is not a possible mapping
-# assertEqual("mapping true BLACK",  None,  rgb2color(cu.RGB_BLACK))
-
 assertEqual("mapping true RED",    Color.RED, rgb2color(cu.RGB_RED))
 assertEqual("mapping true GREEN",  Color.GREEN,  rgb2color(cu.RGB_GREEN))
 assertEqual("mapping color BLUE",  Color.BLUE,  rgb2color(cu.RGB_BLUE))
+
+# tricky-tricky: the black color is not a possible mapping
+# assertEqual("mapping true BLACK",  None,  rgb2color(cu.RGB_BLACK))
 
 ##############################################################################
 cube.set_center_rgb(0, cu.RGB_WHITE)

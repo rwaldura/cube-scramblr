@@ -10,8 +10,6 @@
 from pybricks.parameters import Color
 from pybricks.tools import print
 
-import color_mapper
-
 ##############################################################################
 # globals and constants
 
@@ -41,8 +39,3 @@ def color2str(color) :
         return COLOR_NAMES[color]
     else :
         return None
-
-##############################################################################
-# Return the name of a given Color
-def rgb2str(rgb) :
-    return color2str(color_mapper.rgb2color(rgb))
