@@ -87,13 +87,6 @@ def distance2(x, y) :
 
 ##############################################################################
 # Assign a color to each center facelet -- it represents the face color.
-#
-# Compute distance for each face color. The face that has the highest
-# distance overall, is labelled White. Its opposite face is Yellow.
-# The face that has the smallest distance from black is Blue. Its opposite 
-# face is Green.
-# For red, we pick the face with the highest red component. The last face is 
-# therefore Orange.
 def map_face_centers() :
     f = closest_face_center(cu.RGB_WHITE)
     map_face_center(f, Color.WHITE)
@@ -104,12 +97,12 @@ def map_face_centers() :
     f = closest_face_center(cu.RGB_RED)
     map_face_center(f, Color.RED)
 
-# find how close the last un-mapped faces are to RED
+##############################################################################
 def closest_face_center(rgb) :
     dist = [0] * 6
 
     for f in range(6) :
-        if (cube.is_valid(cube.center(f))) : # skip mapped face
+        if (cube.is_valid(cube.center(f))) : # skip already mapped face
             dist[f] = MAX_DISTANCE 
         else :
             dist[f] = distance2(cube.center_rgb(f), rgb)

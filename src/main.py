@@ -13,7 +13,7 @@ from pybricks.tools import print, wait
 
 import random, time
 
-import cube, turntable, flip_arm, scan_arm, color_scanner
+import cube, turntable, flip_arm, scan_arm, color_scanner, color_mapper
 import color_utils as cu
 
 ##############################################################################
@@ -107,13 +107,15 @@ def scan_cube(debug = False) :
 ##############################################################################
 # We've scanned the entire cube, and read RGB samples for each facelet.
 # Now map each facelet to an actual color constant. 
-def map_cube_colors() :    
-    # identify the white face first
-    white_face = color_mapper.find_white_face()
+def map_cube_colors(debug = False) :    
+    color_mapper.map_face_centers()
 
-    # the opposite of the white face is the yellow face
-
-    return
+    if (debug) :
+        for f in range(6) :
+            color = cube.center(f)
+            rgb = cube.center_rgb(f)
+            print("face {} is {} RGB {}/{}/{} cmap {}".format(
+                f, cu.color2str(color), rgb['r'], rgb['g'], rgb['b'], color_mapper.rgb2str(rgb)))
 
 ##############################################################################
 # Calibrate the color sensor; only used during development
