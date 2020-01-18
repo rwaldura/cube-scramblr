@@ -11,7 +11,7 @@ def assertTrue(mesg, cond) :
 
 def assertEqual(mesg, expected, actual) :
     if (expected != actual) :
-        print(fail_mark, mesg, "expected", expected, "but got instead", actual)
+        print(fail_mark, mesg, "wanted:", expected, "got instead:", actual)
         assert False
     else :
         print(pass_mark, mesg)

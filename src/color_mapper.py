@@ -95,25 +95,32 @@ def distance2(x, y) :
 # For red, we pick the face with the highest red component. The last face is 
 # therefore Orange.
 def map_face_centers() :
+    f = closest_face_center(cu.RGB_WHITE)
+    map_face_center(f, Color.WHITE)
+
+    f = closest_face_center(cu.RGB_BLUE)
+    map_face_center(f, Color.BLUE)
+
+    f = closest_face_center(cu.RGB_RED)
+    map_face_center(f, Color.RED)
+
+# find how close the last un-mapped faces are to RED
+def closest_face_center(rgb) :
     dist = [0] * 6
-    for f in range(6) :
-        dist[f] = distance2(cube.center_rgb(f), cu.RGB_BLACK)
-        print("face", f, "color", cube.center_rgb(f), "distance to black", dist[f])
 
-    map_face_center(dist.index(max(dist)), Color.WHITE)
-    map_face_center(dist.index(min(dist)), Color.BLUE)
-
-    # find how close the last un-mapped faces are to RED
     for f in range(6) :
-        if (cube.is_valid(cube.center(f))) :
-            dist[f] = MAX_DISTANCE # skip mapped face
+        if (cube.is_valid(cube.center(f))) : # skip mapped face
+            dist[f] = MAX_DISTANCE 
         else :
-            dist[f] = distance2(cube.center_rgb(f), cu.RGB_RED)
+            dist[f] = distance2(cube.center_rgb(f), rgb)
 
-    map_face_center(dist.index(min(dist)), Color.RED)
+    return dist.index(min(dist))
 
 ##############################################################################
 def map_face_center(face, color) :
+    # sanity check: prevent overwrites
+    # assert cube.center(face) == cu.RGB_BLACK
+
     cube.set_center(face, color)
     print("face #", face, "mapped to", cu.color2str(color))
 

@@ -16,9 +16,9 @@ assertEqual("distance white-black", MAX_DISTANCE, distance2(cu.RGB_WHITE, cu.RGB
 
 ##############################################################################
 assertEqual("mapping true WHITE",  Color.WHITE, rgb2color(cu.RGB_WHITE))
-assertEqual("mapping true RED",    Color.RED, rgb2color(cu.RGB_RED))
-assertEqual("mapping true GREEN",  Color.GREEN,  rgb2color(cu.RGB_GREEN))
-assertEqual("mapping color BLUE",  Color.BLUE,  rgb2color(cu.RGB_BLUE))
+assertEqual("mapping true RED",    Color.RED,   rgb2color(cu.RGB_RED))
+assertEqual("mapping true GREEN",  Color.GREEN, rgb2color(cu.RGB_GREEN))
+assertEqual("mapping true BLUE",   Color.BLUE,  rgb2color(cu.RGB_BLUE))
 
 # tricky-tricky: the black color is not a possible mapping
 # assertEqual("mapping true BLACK",  None,  rgb2color(cu.RGB_BLACK))
@@ -26,10 +26,17 @@ assertEqual("mapping color BLUE",  Color.BLUE,  rgb2color(cu.RGB_BLUE))
 ##############################################################################
 cube.set_center_rgb(0, cu.RGB_WHITE)
 # therefore face 2 is yellow
+
 cube.set_center_rgb(1, cu.RGB_BLUE)
 # therefore face 3 is green
+
 cube.set_center_rgb(4, cu.RGB_RED)
 # therefore face 5 is orange 
+
+# I don't care about these faces; give them a dummy color for testing purposes
+cube.set_center_rgb(2, cu.RGB_GREY)
+cube.set_center_rgb(3, cu.RGB_GREY)
+cube.set_center_rgb(5, cu.RGB_GREY)
 
 map_face_centers()
 
@@ -52,6 +59,10 @@ cube.set_center_rgb(0, cu.RGB_GREEN)
 cube.set_center_rgb(1, cu.RGB_RED)
 cube.set_center_rgb(2, cu.RGB_BLUE)
 cube.set_center_rgb(4, cu.RGB_WHITE)
+
+# I don't care about these faces; give them a dummy color for testing purposes
+cube.set_center_rgb(3, cu.RGB_GREY)
+cube.set_center_rgb(5, cu.RGB_GREY)
 
 map_face_centers()
 
