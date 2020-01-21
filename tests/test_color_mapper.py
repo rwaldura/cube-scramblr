@@ -40,8 +40,8 @@ assertEqual("mapped face 1.4", Color.GREEN, cube.center(3))
 assertEqual("mapped face 1.5", Color.RED, cube.center(4))
 assertEqual("mapped face 1.6", Color.ORANGE, cube.center(5))
 
-assertTrue("distinct face colors", validate_distinct_face_colors())
-assertTrue("opposite face colors", validate_opposite_face_colors())
+assertTrue("distinct face colors 1", validate_distinct_face_colors())
+assertTrue("opposite face colors 1", validate_opposite_face_colors())
 
 # negative test
 assertEqual("mapped face 1.7", Color.BLACK, cube.facelet(0, 1))
@@ -66,4 +66,7 @@ assertEqual("mapped face 2.3", Color.RED, cube.center(1))
 assertEqual("mapped face 2.4", Color.ORANGE, cube.center(3))
 assertEqual("mapped face 2.5", Color.WHITE, cube.center(4))
 assertEqual("mapped face 2.6", Color.YELLOW, cube.center(5))
+
+assertTrue("distinct face colors 2", validate_distinct_face_colors())
+assertTrue("opposite face colors 2", validate_opposite_face_colors())
 

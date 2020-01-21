@@ -125,7 +125,7 @@ def validate_opposite_face_colors() :
 
 ##############################################################################
 # Alernate way to map color, by using cube hints
-def _map_face_centers_old() :
+def _alt_map_face_centers() :
     f = closest_face_center(cu.RGB_WHITE)
     map_face_center(f, Color.WHITE)
 
@@ -150,7 +150,7 @@ def closest_face_center(rgb) :
 ##############################################################################
 def map_face_center(face, color) :
     # sanity check: prevent overwrites
-    # assert cube.center(face) == cu.RGB_BLACK
+    #assert cube.center(face) == cu.RGB_BLACK
 
     cube.set_center(face, color)
     print("face", face, "mapped to", cu.color2str(color))
