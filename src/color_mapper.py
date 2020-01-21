@@ -80,30 +80,29 @@ def sqr(x) :
 # Optimization: since all we do is compare distances (the actual value
 # is irrelevant), only return the squared distance -- no need to compute
 # the square root
-def distance2(x, y) :
-    (xR, xG, xB) = (x['r'], x['g'], x['b'])
-    (yR, yG, yB) = (y['r'], y['g'], y['b'])
-    d = sqr(xR - yR) + sqr(xG - yG) + sqr(xB - yB)
-    # print("distance between", x, "and", y, "=", d)
+def distance2(a, b) :
+    (aR, aG, aB) = (a['r'], a['g'], a['b'])
+    (bR, bG, bB) = (b['r'], b['g'], b['b'])
+    d = sqr(aR - bR) + sqr(aG - bG) + sqr(aB - bB)
+    # print("distance between", a, "and", b, "=", d)
     return d
 
 ##############################################################################
 # Assign a color to each center facelet -- it represents the face color.
-def map_face_centers(validate = True) :
+def map_face_centers() :
     for f in cube.faces() :
         rgb = cube.center_rgb(f)
         color = rgb2color(rgb)
         cube.set_center(f, color)
         print("face", f, "mapped to", cu.color2str(color))
 
-    if (validate) :
-        distinct = validate_distinct_face_colors()
-        print("distinct color check:", distinct)
-        opposites = validate_opposite_face_colors()
-        print("opposite color check:", opposites)
-        return distinct and opposites
-    else :
-        return True
+    distinct = validate_distinct_face_colors()
+    print("distinct color check:", distinct)
+
+    opposites = validate_opposite_face_colors()
+    print("opposite color check:", opposites)
+
+    return distinct and opposites
 
 ##############################################################################
 # validate each face is mapped to a distinct color

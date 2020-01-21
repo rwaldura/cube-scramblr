@@ -12,16 +12,14 @@ from pybricks import ev3brick as brick
 from pybricks.parameters import Button
 from pybricks.tools import print, wait
 
-import sys
-sys.path.append('src')
-
-from main import * 
+from src.main import * 
 
 ##############################################################################
 # main
 init_all()
 
 display("CUBE SCRAMBL3R")
+display("")
 display("Insert cube")
 display("Press UP button to")
 display("scramble, DOWN button")

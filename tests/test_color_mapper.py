@@ -19,6 +19,8 @@ assertEqual("mapping true WHITE",  Color.WHITE, rgb2color(cu.RGB_WHITE))
 assertEqual("mapping true RED",    Color.RED,   rgb2color(cu.RGB_RED))
 assertEqual("mapping true GREEN",  Color.GREEN, rgb2color(cu.RGB_GREEN))
 assertEqual("mapping true BLUE",   Color.BLUE,  rgb2color(cu.RGB_BLUE))
+assertEqual("mapping true YELLOW", Color.YELLOW,rgb2color(cu.RGB_YELLOW))
+assertEqual("mapping true ORANGE", Color.ORANGE,rgb2color(cu.RGB_ORANGE))
 
 # tricky-tricky: the black color is not a possible mapping
 # assertEqual("mapping true BLACK",  None,  rgb2color(cu.RGB_BLACK))
@@ -60,12 +62,14 @@ cube.set_center_rgb(5, cu.RGB_YELLOW)
 
 map_face_centers()
 
-assertEqual("mapped face 2.1", Color.GREEN, cube.center(0))
-assertEqual("mapped face 2.2", Color.BLUE, cube.center(2))
-assertEqual("mapped face 2.3", Color.RED, cube.center(1))
-assertEqual("mapped face 2.4", Color.ORANGE, cube.center(3))
-assertEqual("mapped face 2.5", Color.WHITE, cube.center(4))
-assertEqual("mapped face 2.6", Color.YELLOW, cube.center(5))
+assertListEqual("mapped faces 2", 
+    (   Color.GREEN, 
+        Color.RED, 
+        Color.BLUE, 
+        Color.ORANGE, 
+        Color.WHITE, 
+        Color.YELLOW ),
+    list(map(lambda f: cube.center(f), cube.faces())))
 
 assertTrue("distinct face colors 2", validate_distinct_face_colors())
 assertTrue("opposite face colors 2", validate_opposite_face_colors())
