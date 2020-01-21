@@ -25,18 +25,11 @@ assertEqual("mapping true BLUE",   Color.BLUE,  rgb2color(cu.RGB_BLUE))
 
 ##############################################################################
 cube.set_center_rgb(0, cu.RGB_WHITE)
-# therefore face 2 is yellow
-
 cube.set_center_rgb(1, cu.RGB_BLUE)
-# therefore face 3 is green
-
+cube.set_center_rgb(2, cu.RGB_YELLOW)
+cube.set_center_rgb(3, cu.RGB_GREEN)
 cube.set_center_rgb(4, cu.RGB_RED)
-# therefore face 5 is orange 
-
-# I don't care about these faces; give them a dummy color for testing purposes
-cube.set_center_rgb(2, cu.RGB_GREY)
-cube.set_center_rgb(3, cu.RGB_GREY)
-cube.set_center_rgb(5, cu.RGB_GREY)
+cube.set_center_rgb(5, cu.RGB_ORANGE)
 
 map_face_centers()
 
@@ -46,6 +39,9 @@ assertEqual("mapped face 1.3", Color.BLUE, cube.center(1))
 assertEqual("mapped face 1.4", Color.GREEN, cube.center(3))
 assertEqual("mapped face 1.5", Color.RED, cube.center(4))
 assertEqual("mapped face 1.6", Color.ORANGE, cube.center(5))
+
+assertTrue("distinct face colors", validate_distinct_face_colors())
+assertTrue("opposite face colors", validate_opposite_face_colors())
 
 # negative test
 assertEqual("mapped face 1.7", Color.BLACK, cube.facelet(0, 1))
@@ -58,11 +54,9 @@ cube.reset()
 cube.set_center_rgb(0, cu.RGB_GREEN)
 cube.set_center_rgb(1, cu.RGB_RED)
 cube.set_center_rgb(2, cu.RGB_BLUE)
+cube.set_center_rgb(3, cu.RGB_ORANGE)
 cube.set_center_rgb(4, cu.RGB_WHITE)
-
-# I don't care about these faces; give them a dummy color for testing purposes
-cube.set_center_rgb(3, cu.RGB_GREY)
-cube.set_center_rgb(5, cu.RGB_GREY)
+cube.set_center_rgb(5, cu.RGB_YELLOW)
 
 map_face_centers()
 

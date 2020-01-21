@@ -21,7 +21,8 @@ for i in range(6) :
         }
 
 # my cube has these colors, and no others
-CUBE_COLORS = (
+# note this is a set
+CUBE_COLORS = {
     # Color.BLACK
     Color.BLUE,
     Color.GREEN,
@@ -31,7 +32,7 @@ CUBE_COLORS = (
     # Color.BROWN
     Color.ORANGE
     # Color.PURPLE
-)
+}
 
 # index is the color, yields opposite face color
 CUBE_OPPOSITE_COLORS = (

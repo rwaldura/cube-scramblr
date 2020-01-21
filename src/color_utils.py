@@ -26,12 +26,14 @@ COLOR_NAMES = (
     "purple"    # 9 - Color.PURPLE
 )
 
-RGB_BLACK = { 'r':  0, 'g':  0, 'b':  0 }
-RGB_RED   = { 'r':100, 'g':  0, 'b':  0 }
-RGB_GREEN = { 'r':  0, 'g':100, 'b':  0 }
-RGB_BLUE  = { 'r':  0, 'g':  0, 'b':100 }
-RGB_WHITE = { 'r':100, 'g':100, 'b':100 }
-RGB_GREY  = { 'r': 60, 'g': 60, 'b': 60 }
+RGB_BLACK  = { 'r':  0, 'g':  0, 'b':  0 }
+RGB_RED    = { 'r':100, 'g':  0, 'b':  0 }
+RGB_GREEN  = { 'r':  0, 'g':100, 'b':  0 }
+RGB_BLUE   = { 'r':  0, 'g':  0, 'b':100 }
+RGB_WHITE  = { 'r':100, 'g':100, 'b':100 }
+RGB_GREY   = { 'r': 50, 'g': 50, 'b': 50 }
+RGB_YELLOW = { 'r':100, 'g':100, 'b':  0 }
+RGB_ORANGE = { 'r':100, 'g': 50, 'b':  0 }
 
 ##############################################################################
 # Return the name of a given Color

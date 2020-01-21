@@ -56,8 +56,8 @@ def rgb2str(rgb) :
 ##############################################################################
 # Map a R/G/B dict to a known Color constant
 def rgb2color(rgb) :
-    # print("mapping RGB {}/{}/{}".format(rgb['r'], rgb['g'], rgb['b']))
     color = pick_closest_color(rgb)
+    # print("mapped RGB {}/{}/{} to color {}".format(rgb['r'], rgb['g'], rgb['b'], color))
     return color
 
 ##############################################################################
@@ -89,7 +89,43 @@ def distance2(x, y) :
 
 ##############################################################################
 # Assign a color to each center facelet -- it represents the face color.
-def map_face_centers() :
+def map_face_centers(validate = True) :
+    for f in range(6) :
+        rgb = cube.center_rgb(f)
+        color = rgb2color(rgb)
+        cube.set_center(f, color)
+        print("face", f, "mapped to", cu.color2str(color))
+
+    if (validate) :
+        distinct = validate_distinct_face_colors()
+        print("distinct color check:", distinct)
+        opposites = validate_opposite_face_colors()
+        print("opposite color check:", opposites)
+        return distinct and opposites
+    else :
+        return True
+
+##############################################################################
+# validate each face is mapped to a distinct color
+def validate_distinct_face_colors() :
+    face_colors = map(lambda f: cube.center(f), range(6))
+    return cube.CUBE_COLORS == set(face_colors)
+
+##############################################################################
+# validate each opposite face has the opposite color
+def validate_opposite_face_colors() :
+    result = True
+
+    for f in range(6) :
+        color = cube.center(f)
+        opp_face = cube.opposite_face(f)
+        result = result and cube.center(opp_face) == cube.opposite_color(color)
+        
+    return result
+
+##############################################################################
+# Alernate way to map color, by using cube hints
+def _map_face_centers_old() :
     f = closest_face_center(cu.RGB_WHITE)
     map_face_center(f, Color.WHITE)
 
