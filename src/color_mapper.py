@@ -90,7 +90,7 @@ def distance2(x, y) :
 ##############################################################################
 # Assign a color to each center facelet -- it represents the face color.
 def map_face_centers(validate = True) :
-    for f in range(6) :
+    for f in cube.faces() :
         rgb = cube.center_rgb(f)
         color = rgb2color(rgb)
         cube.set_center(f, color)
@@ -108,7 +108,7 @@ def map_face_centers(validate = True) :
 ##############################################################################
 # validate each face is mapped to a distinct color
 def validate_distinct_face_colors() :
-    face_colors = map(lambda f: cube.center(f), range(6))
+    face_colors = map(lambda f: cube.center(f), cube.faces())
     return cube.CUBE_COLORS == set(face_colors)
 
 ##############################################################################
@@ -116,7 +116,7 @@ def validate_distinct_face_colors() :
 def validate_opposite_face_colors() :
     result = True
 
-    for f in range(6) :
+    for f in cube.faces() :
         color = cube.center(f)
         opp_face = cube.opposite_face(f)
         result = result and cube.center(opp_face) == cube.opposite_color(color)
@@ -137,9 +137,9 @@ def _alt_map_face_centers() :
 
 ##############################################################################
 def closest_face_center(rgb) :
-    dist = [0] * 6
+    dist = [0] * cube.faces()
 
-    for f in range(6) :
+    for f in cube.faces() :
         if (cube.is_valid(cube.center(f))) : # skip already mapped face
             dist[f] = MAX_DISTANCE 
         else :

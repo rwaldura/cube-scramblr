@@ -90,7 +90,7 @@ def scramble_cube(moves = default_scrambling_moves) :
 # Visit all 6 faces of the cube, scanning each one.
 # Populate the "cube" data structure.
 def scan_cube(debug = False) :
-    for face in range(6) :
+    for face in cube.faces() :
         if (face == 4) :
             rotate_cube() # quarter turn
         if (face == 5) :
@@ -111,7 +111,7 @@ def map_cube_colors(debug = False) :
     color_mapper.map_face_centers()
 
     if (debug) :
-        for f in range(6) :
+        for f in cube.faces() :
             color = cube.center(f)
             rgb = cube.center_rgb(f)
             print("face {} is {} RGB {}/{}/{} cmap {}".format(

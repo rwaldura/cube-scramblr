@@ -10,11 +10,14 @@ from pybricks.parameters import Color
 
 import color_utils as cu
 
-# initialize the cube
-_cube = [None] * 6
-for i in range(6) :
-    _cube[i] = [None] * 9
-    for j in range(9) :
+CUBE_FACES = 6
+CUBE_FACELETS = 9
+
+# initialize the cube to all black (not a valid color)
+_cube = [None] * CUBE_FACES
+for i in range(CUBE_FACES) :
+    _cube[i] = [None] * CUBE_FACELETS
+    for j in range(CUBE_FACELETS) :
         _cube[i][j] = { 
             'rgb': cu.RGB_BLACK, 
             'color': Color.BLACK 
@@ -85,6 +88,14 @@ CUBE_EDGES = (
 )
 
 ##############################################################################
+def faces() :
+    return range(CUBE_FACES)
+
+##############################################################################
+def facelets() :
+    return range(CUBE_FACELETS)
+
+##############################################################################
 # Return the color constant of a facelet, defined by its number
 # with: 
 # 0: center
@@ -145,8 +156,8 @@ def uniq(l) :
 def to_str() :
     result = []
 
-    for face in range(len(_cube)) :
-        for facelet in range(len(_cube[face])) :
+    for face in faces() :
+        for facelet in facelets() :
             rgb = facelet_rgb(face, facelet)
             s = "face {} facelet {} RGB {}/{}/{} mapped to {}".format(
                 face, facelet, rgb['r'], rgb['g'], rgb['b'], "-")
@@ -173,7 +184,7 @@ def opposite_face(face) :
 
 ##############################################################################
 def reset() :
-    for i in range(6) :
-        for j in range(9) :
+    for i in faces() :
+        for j in facelets() :
             set_facelet(i, j, Color.BLACK)
             set_facelet_rgb(i, j, cu.RGB_BLACK)

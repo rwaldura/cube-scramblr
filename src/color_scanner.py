@@ -43,7 +43,7 @@ def scan_cube_face_center(face_num) :
 # facelet colors.
 def scan_cube_face_edges(face_num) :
     # for each facelet
-    for i in range(1, 9) : # 1..8
+    for i in range(1, cube.CUBE_FACELETS) :
         if (i % 2 == 1) :
             scan_arm.move_edge()
         else :
@@ -54,6 +54,6 @@ def scan_cube_face_edges(face_num) :
         cube.set_facelet_rgb(face_num, i, rgb)
         print("face", face_num, "facelet", i, "may be", color_mapper.rgb2str(rgb))
 
-        if (i < 8) :
+        if (i < (cube.CUBE_FACELETS - 1)) :
             turntable.next_facelet()
             # pause()

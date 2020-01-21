@@ -6,6 +6,10 @@ from cube import *
 from asserts import *
 
 ##############################################################################
+assertEqual("faces", {0,1,2,3,4,5}, set(faces()))
+assertEqual("facelets", {0,1,2,3,4,5,6,7,8}, set(facelets()))
+
+##############################################################################
 set_center(1, Color.WHITE)
 assertEqual("1.1. center color", Color.BLACK, center(0))
 assertEqual("1.2. center color", Color.WHITE, center(1))
