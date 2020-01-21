@@ -13,16 +13,6 @@ import color_utils as cu
 CUBE_FACES = 6
 CUBE_FACELETS = 9
 
-# initialize the cube to all black (not a valid color)
-_cube = [None] * CUBE_FACES
-for i in range(CUBE_FACES) :
-    _cube[i] = [None] * CUBE_FACELETS
-    for j in range(CUBE_FACELETS) :
-        _cube[i][j] = { 
-            'rgb': cu.RGB_BLACK, 
-            'color': Color.BLACK 
-        }
-
 # my cube has these colors, and no others
 # note this is a set
 CUBE_COLORS = {
@@ -188,3 +178,16 @@ def reset() :
         for j in facelets() :
             set_facelet(i, j, Color.BLACK)
             set_facelet_rgb(i, j, cu.RGB_BLACK)
+
+
+##############################################################################
+# initialize the cube to all black (not a valid color)
+_cube = [None] * CUBE_FACES
+for i in faces() :
+    _cube[i] = [None] * CUBE_FACELETS
+    for j in facelets() :
+        _cube[i][j] = { 
+            'rgb': cu.RGB_BLACK, 
+            'color': Color.BLACK 
+        }
+

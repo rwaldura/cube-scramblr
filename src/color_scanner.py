@@ -1,5 +1,11 @@
 #
-# Color scanning logic.
+# Cube face scanning order:
+#
+# 6 | 5 | 4
+# — + — + —
+# 7 | 0 | 3
+# — + — + —
+# 8 | 1 | 2
 #
 # by Ren Waldura ren+lego@waldura.org, 2020
 #
@@ -36,14 +42,12 @@ def scan_cube_face_center(face_num) :
     print("face", face_num, "may be", color_mapper.rgb2str(cube.center_rgb(face_num)))
 
 ##############################################################################
-# Read each facelet, edges and corners: rotate the table by a entire turn, 
-# reading all colors under the scanning head (color sensor) as we go.
-#
-# This will require some solid post-processing to isolate distinct 
-# facelet colors.
+# Read each facelet, edges and corners.
 def scan_cube_face_edges(face_num) :
-    # for each facelet
-    for i in range(1, cube.CUBE_FACELETS) :
+    for i in cube.facelets() :
+        if (i == 0) :
+            continue # skip center facelet, already scanned
+
         if (i % 2 == 1) :
             scan_arm.move_edge()
         else :
@@ -54,6 +58,6 @@ def scan_cube_face_edges(face_num) :
         cube.set_facelet_rgb(face_num, i, rgb)
         print("face", face_num, "facelet", i, "may be", color_mapper.rgb2str(rgb))
 
-        if (i < (cube.CUBE_FACELETS - 1)) :
+        if (i < cube.CUBE_FACELETS - 1) :
             turntable.next_facelet()
             # pause()
