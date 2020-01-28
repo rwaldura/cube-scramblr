@@ -14,25 +14,6 @@ import cube
 import color_utils as cu
 
 # values in 100-based RGB space, based on experimentation
-
-# yellow
-# center color  69.80999999999999 65.27 43.44999999999999
-
-# red
-# center color  46.83999999999999 18.65 9.000000000000002
-
-# blue
-# center color  11.77 19.13 34.05
-
-# green
-# center color  14.26 29.52 10.4
-
-# orange
-# center color  55.68 38.73 11.5
-
-# white
-# center color  64.76000000000001 73.70000000000001 75.94999999999999
-
 CUBE_COLORS_RGB = (
     None,                           # 0 - undefined
     None,                           # 1 - black (undefined)
